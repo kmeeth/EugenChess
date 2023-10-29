@@ -7,3 +7,6 @@ add_library(EugenChess
         h/Communicator.h
         src/Communicator.cpp
 )
+
+enable_testing()
+add_subdirectory(test)
