@@ -9,3 +9,6 @@ add_library(EugenChess
         h/Engine.h
         src/Engine.cpp
 )
+
+enable_testing()
+add_subdirectory(test)
