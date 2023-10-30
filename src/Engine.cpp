@@ -14,10 +14,10 @@ Engine::Move::Move(std::string_view algebraic)
 
 std::ostream& operator<<(std::ostream& stream, const Engine::Move& move)
 {
-    stream << move.from.x + 'a';
-    stream << move.from.y + '1';
-    stream << move.to.x + 'a';
-    stream << move.to.y + '1';
+    stream << (char)(move.from.x + 'a');
+    stream << (char)(move.from.y + '1');
+    stream << (char)(move.to.x + 'a');
+    stream << (char)(move.to.y + '1');
     return stream;
 }
 
