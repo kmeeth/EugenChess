@@ -9,5 +9,8 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(DummyTests Dummy.cpp)
 target_link_libraries(DummyTests EugenChess gtest gtest_main)
-
 add_test(NAME DummyTests COMMAND DummyTests)
+
+add_executable(EngineTests Engine.cpp)
+target_link_libraries(EngineTests EugenChess gtest gtest_main)
+add_test(NAME EngineTests COMMAND EngineTests)

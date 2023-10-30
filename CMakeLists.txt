@@ -6,6 +6,8 @@ project(EugenChess LANGUAGES CXX)
 add_library(EugenChess
         h/Communicator.h
         src/Communicator.cpp
+        h/Engine.h
+        src/Engine.cpp
 )
 
 enable_testing()
