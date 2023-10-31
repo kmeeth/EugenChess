@@ -7,3 +7,6 @@ To the best of author's knowledge, the engines, more often than not, fail (or do
 
 It will provide an abstraction for the communication protocol and an abstraction for the engine functionality. This is WIP currently.
 Every interface has its limitations in terms of how many diverse protocols it can cover, however this library seeks to provide reasonably general utility. It can be extended if need be.
+
+## Dependencies
+Currently, EugenChess only depends on gtest for unit testing.
