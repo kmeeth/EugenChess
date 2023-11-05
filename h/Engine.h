@@ -6,6 +6,7 @@
 #include <variant>
 #include <vector>
 #include <unordered_map>
+#include <memory>
 /*
  * This class is an abstraction for a chess engine. It offers an interface of basic engine functionalities.
  */
@@ -47,9 +48,16 @@ namespace eugenchess::engine
         // need knowledge of the protocol, certain protocols might have requirements for their contents. These are to
         // be documented for Communicator specializations, if present. Strings are used as a base type as they are the
         // most general one.
-        using OptionEntry = std::variant<std::string, std::vector<std::string>>;
-        using EngineOption = std::unordered_map<std::string, OptionEntry>;
-        using EngineOptions = std::unordered_map<std::string, EngineOption>;
+        using EngineOptionEntry = std::variant<std::string, std::vector<std::string>>;
+        class EngineOption
+        {
+        public:
+            virtual ~EngineOption() = default;
+            [[nodiscard]] virtual EngineOptionEntry get(std::string_view entry) const = 0;
+            virtual void set(std::string_view entry, EngineOptionEntry value) = 0;
+        };
+        // Maps the name of the engine option to the option itself.
+        using EngineOptions = std::unordered_map<std::string, std::unique_ptr<EngineOption>>;
         [[nodiscard]] virtual EngineOptions& options() const = 0;
         virtual ~Engine() = default;
     };
