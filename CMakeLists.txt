@@ -8,6 +8,8 @@ add_library(EugenChess
         src/Communicator.cpp
         h/Engine.h
         src/Engine.cpp
+        h/uci/UCICommunicator.h
+        src/uci/UCICommunicator.cpp
 )
 
 enable_testing()
