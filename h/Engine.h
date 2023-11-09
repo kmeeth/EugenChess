@@ -6,6 +6,7 @@
 #include <variant>
 #include <vector>
 #include <unordered_map>
+#include <memory>
 /*
  * This class is an abstraction for a chess engine. It offers an interface of basic engine functionalities.
  */
@@ -27,7 +28,19 @@ namespace eugenchess::engine
         };
         virtual void setPosition(std::string_view FEN) = 0;
         [[nodiscard]] virtual std::string getFEN() const = 0;
+        struct Clock
+        {
+            int whiteTime, blackTime; // In milliseconds.
+            int whiteIncrement, blackIncrement; // In milliseconds.
+            int turnsToTimeControl;
+        };
+        virtual void setClock(Clock clock) = 0;
         virtual void playMove(Move move) = 0;
+        virtual Move calculateBestMove() = 0;
+        virtual void ponderMove(Move move) = 0;
+        // The pondered move has been played and the engine should continue the search for the best move as regular.
+        // ponderHit() returns the best move.
+        virtual Move ponderHit() = 0;
         // Some Engines might want to implement some protocol-specific options. This function makes knowledge of the
         // protocol possible to the Engine.
         virtual void setProtocol(std::string_view name) = 0;
@@ -35,9 +48,16 @@ namespace eugenchess::engine
         // need knowledge of the protocol, certain protocols might have requirements for their contents. These are to
         // be documented for Communicator specializations, if present. Strings are used as a base type as they are the
         // most general one.
-        using OptionEntry = std::variant<std::string, std::vector<std::string>>;
-        using EngineOption = std::unordered_map<std::string, OptionEntry>;
-        using EngineOptions = std::unordered_map<std::string, EngineOption>;
+        using EngineOptionEntry = std::variant<std::string, std::vector<std::string>>;
+        class EngineOption
+        {
+        public:
+            virtual ~EngineOption() = default;
+            [[nodiscard]] virtual EngineOptionEntry get(std::string_view entry) const = 0;
+            virtual void set(std::string_view entry, EngineOptionEntry value) = 0;
+        };
+        // Maps the name of the engine option to the option itself.
+        using EngineOptions = std::unordered_map<std::string, std::unique_ptr<EngineOption>>;
         [[nodiscard]] virtual EngineOptions& options() const = 0;
         virtual ~Engine() = default;
     };
