@@ -5,7 +5,7 @@
 using namespace eugenchess::engine;
 
 Engine::Move::Move(std::string_view algebraic)
-    :from(), to()
+        : from(), to()
 {
     from.x = algebraic[0] - 'a';
     from.y = algebraic[1] - '1';
@@ -15,16 +15,16 @@ Engine::Move::Move(std::string_view algebraic)
 
 std::ostream& operator<<(std::ostream& stream, const Engine::Move& move)
 {
-    stream << (char)(move.from.x + 'a');
-    stream << (char)(move.from.y + '1');
-    stream << (char)(move.to.x + 'a');
-    stream << (char)(move.to.y + '1');
+    stream << (char) (move.from.x + 'a');
+    stream << (char) (move.from.y + '1');
+    stream << (char) (move.to.x + 'a');
+    stream << (char) (move.to.y + '1');
     return stream;
 }
 
-std::ostream &operator<<(std::ostream& stream, const Engine::Move::MaybeMove& maybeMove)
+std::ostream& operator<<(std::ostream& stream, const Engine::Move::MaybeMove& maybeMove)
 {
-    if(maybeMove.has_value())
+    if (maybeMove.has_value())
         return (stream << maybeMove.value());
     return stream << "0000";
 }
@@ -47,27 +47,28 @@ void Engine::EngineOption::set(const Engine::EngineOption::OptionValue& v)
 bool Engine::EngineOption::isWithinConstraint(const Engine::EngineOption::OptionValue& optionValue,
                                               const Engine::EngineOption::MaybeConstraint& constraint)
 {
-    if(!constraint.has_value())
+    if (!constraint.has_value())
         return true;
     const int valueIndex = static_cast<int>(optionValue.index());
     const int constraintIndex = static_cast<int>(constraint.value().index());
     // Assuming the two are equal.
-    if(valueIndex == 0 and constraintIndex == 0) // int with range.
+    if (valueIndex == 0 and constraintIndex == 0) // int with range.
     {
         auto& value = std::get<int>(optionValue);
         auto& rangeConstraint = std::get<RangeConstraint>(constraint.value());
         return rangeConstraint.first <= value and rangeConstraint.second >= value;
     }
-    else if(valueIndex == 1 and constraintIndex == 1) // std::string with enum.
+    else if (valueIndex == 1 and constraintIndex == 1) // std::string with enum.
     {
         auto& value = std::get<std::string>(optionValue);
         auto& enumConstraint = std::get<EnumConstraint>(constraint.value());
-        return std::any_of(enumConstraint.begin(), enumConstraint.end(), [=](const std::string& x){return x == value;});
+        return std::any_of(enumConstraint.begin(), enumConstraint.end(), [=](const std::string& x)
+        { return x == value; });
     }
     return false;
 }
 
 Engine::EngineOption::EngineOption(Engine::EngineOption::Constraint c)
-    :maybeConstraint(c)
+        : maybeConstraint(c)
 {
 }

@@ -1,5 +1,6 @@
 #ifndef EUGENCHESS_ENGINE_H
 #define EUGENCHESS_ENGINE_H
+
 #include <string_view>
 #include <string>
 #include <optional>
