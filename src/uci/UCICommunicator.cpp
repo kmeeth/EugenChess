@@ -23,7 +23,7 @@ std::ostream& UCICommunicator::getOutput() const
     return out;
 }
 
-Engine &UCICommunicator::getEngine() const
+Engine& UCICommunicator::getEngine() const
 {
     return engine;
 }
