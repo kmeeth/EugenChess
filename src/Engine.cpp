@@ -66,3 +66,8 @@ bool Engine::EngineOption::isWithinConstraint(const Engine::EngineOption::Option
     }
     return false;
 }
+
+Engine::EngineOption::EngineOption(Engine::EngineOption::Constraint c)
+    :maybeConstraint(c)
+{
+}

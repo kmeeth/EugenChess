@@ -56,10 +56,7 @@ namespace eugenchess::engine
             using MaybeConstraint = std::optional<Constraint>;
             using OptionValue = std::variant<int, std::string>;
             EngineOption() = default;
-            explicit EngineOption(Constraint c)
-                : maybeConstraint(c)
-            {
-            }
+            explicit EngineOption(Constraint c);
             [[nodiscard]] MaybeConstraint getConstraint() const;
             static bool isWithinConstraint(const OptionValue&, const MaybeConstraint&);
             // The get() and set() methods may be overridden, e.g. in order to ensure thread-safety.
