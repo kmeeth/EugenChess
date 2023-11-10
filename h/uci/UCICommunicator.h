@@ -18,7 +18,7 @@ namespace eugenchess::uci
         std::istream& in;
         std::ostream& out;
         engine::Engine& engine;
-    }
+    };
 }
 
 #endif //EUGENCHESS_UCICOMMUNICATOR_H
