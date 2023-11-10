@@ -73,4 +73,66 @@ TEST(EngineTests, MaybeMovePrint)
     }
 }
 
+// Tests the Engine::EngineOption constructors.
+using EngineOption = Engine::EngineOption;
+TEST(EngineTests, EngineOptionConstruction)
+{
+    {
+        EngineOption engineOption;
+        EXPECT_TRUE(!engineOption.getConstraint().has_value());
+    }
+    {
+        EngineOption::RangeConstraint constraint(0, 100);
+        EngineOption engineOption(constraint);
+        EXPECT_TRUE(engineOption.getConstraint().has_value());
+        EXPECT_TRUE(std::get<EngineOption::RangeConstraint>(engineOption.getConstraint().value()) == constraint);
+    }
+    {
+        EngineOption::EnumConstraint constraint{ "Hello", "World", "!" };
+        EngineOption engineOption(constraint);
+        EXPECT_TRUE(engineOption.getConstraint().has_value());
+        EXPECT_TRUE(std::get<EngineOption::EnumConstraint>(engineOption.getConstraint().value()) == constraint);
+    }
+}
+
+// Tests isWithinConstraint() for Engine::EngineOption::RangeConstraint.
+TEST(EngineTests, RangeConstraint)
+{
+    const EngineOption::RangeConstraint constraint(0, 100);
+    EngineOption engineOption(constraint);
+    const std::pair<int, bool> queries[] =
+            {
+                    {40, true}, {1, true}, {0, true}, {-1, false}, {-50, false},
+                    {99, true}, {100, true}, {101, false}, {154, false}
+            };
+    for(const auto&[val, exp] : queries)
+    {
+        EXPECT_TRUE(EngineOption::isWithinConstraint(val, constraint) == exp);
+    }
+}
+
+// Tests isWithinConstraint() for Engine::EngineOption::EnumConstraint.
+TEST(EngineTests, EnumConstraint)
+{
+    const EngineOption::EnumConstraint constraint{"A", "B", "C", "IF"};
+    EngineOption engineOption(constraint);
+    const std::pair<std::string, bool> queries[] =
+            {
+                    {"A", true}, {"B", true}, {"C", true}, {"D", false}, {"AB", false}, {"I", false}, {"", false}
+            };
+    for(const auto&[val, exp] : queries)
+    {
+        EXPECT_TRUE(EngineOption::isWithinConstraint(val, constraint) == exp);
+    }
+}
+
+// Tests isWithinConstraint() for no constraint.
+TEST(EngineTests, NoConstraint)
+{
+    EngineOption engineOption;
+    EXPECT_TRUE(EngineOption::isWithinConstraint(5, engineOption.getConstraint()));
+    EXPECT_TRUE(EngineOption::isWithinConstraint("Tu manges une orange.", engineOption.getConstraint()));
+}
+
+
 
