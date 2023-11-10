@@ -61,6 +61,7 @@ namespace eugenchess::engine
             {
             }
             [[nodiscard]] MaybeConstraint getConstraint() const;
+            static bool isWithinConstraint(const OptionValue&, const MaybeConstraint&);
             // The get() and set() methods may be overridden, e.g. in order to ensure thread-safety.
             [[nodiscard]] virtual OptionValue get() const;
             virtual void set(const OptionValue&);
