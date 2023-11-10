@@ -3,7 +3,7 @@
 using namespace eugenchess::uci;
 using namespace eugenchess::engine;
 
-UCICommunicator::UCICommunicator(std::istream &in, std::ostream &out, Engine &engine)
+UCICommunicator::UCICommunicator(std::istream& in, std::ostream& out, Engine& engine)
 :in(in), out(out), engine(engine)
 {
 }
