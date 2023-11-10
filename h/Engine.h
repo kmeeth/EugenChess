@@ -1,6 +1,7 @@
 #ifndef EUGENCHESS_ENGINE_H
 #define EUGENCHESS_ENGINE_H
 #include <string_view>
+#include <string>
 #include <optional>
 #include <any>
 #include <variant>
@@ -44,20 +45,34 @@ namespace eugenchess::engine
         // Some Engines might want to implement some protocol-specific options. This function makes knowledge of the
         // protocol possible to the Engine.
         virtual void setProtocol(std::string_view name) = 0;
-        // Engine options are represented as pseudo-JSON objects. Since this is the only part of the Engine that might
-        // need knowledge of the protocol, certain protocols might have requirements for their contents. These are to
-        // be documented for Communicator specializations, if present. Strings are used as a base type as they are the
-        // most general one.
-        using EngineOptionEntry = std::variant<std::string, std::vector<std::string>>;
+        // Engine options are represented as either integers or strings. These can be constrained or unconstrained.
+        // Constrained strings belong to a set of strings, while constrained integers fall within a range.
         class EngineOption
         {
         public:
+            using RangeConstraint = std::pair<int, int>;
+            using EnumConstraint = std::vector<std::string>;
+            using Constraint = std::variant<RangeConstraint, EnumConstraint>;
+            using MaybeConstraint = std::optional<Constraint>;
+            using OptionValue = std::variant<int, std::string>;
+            EngineOption() = default;
+            explicit EngineOption(Constraint c);
+            [[nodiscard]] MaybeConstraint getConstraint() const;
+            static bool isWithinConstraint(const OptionValue&, const MaybeConstraint&);
+            // The get() and set() methods may be overridden, e.g. in order to ensure thread-safety.
+            [[nodiscard]] virtual OptionValue get() const;
+            virtual void set(const OptionValue&);
             virtual ~EngineOption() = default;
-            [[nodiscard]] virtual EngineOptionEntry get(std::string_view entry) const = 0;
-            virtual void set(std::string_view entry, EngineOptionEntry value) = 0;
+        protected:
+            // This protected member exists because it serves the default implementations of the methods. It
+            // can be used freely in alternative implementations.
+            OptionValue value;
+        private:
+            // Must have the same underlying type as the value.
+            const MaybeConstraint maybeConstraint;
         };
         // Maps the name of the engine option to the option itself.
-        using EngineOptions = std::unordered_map<std::string, std::unique_ptr<EngineOption>>;
+        using EngineOptions = std::unordered_map<std::string, EngineOption>;
         [[nodiscard]] virtual EngineOptions& options() const = 0;
         virtual ~Engine() = default;
     };
