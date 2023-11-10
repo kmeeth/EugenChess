@@ -5,7 +5,7 @@
 using namespace eugenchess::engine;
 
 Engine::Move::Move(std::string_view algebraic)
-        : from(), to()
+    : from(), to()
 {
     from.x = algebraic[0] - 'a';
     from.y = algebraic[1] - '1';
@@ -15,10 +15,10 @@ Engine::Move::Move(std::string_view algebraic)
 
 std::ostream& operator<<(std::ostream& stream, const Engine::Move& move)
 {
-    stream << (char) (move.from.x + 'a');
-    stream << (char) (move.from.y + '1');
-    stream << (char) (move.to.x + 'a');
-    stream << (char) (move.to.y + '1');
+    stream << (char)(move.from.x + 'a');
+    stream << (char)(move.from.y + '1');
+    stream << (char)(move.to.x + 'a');
+    stream << (char)(move.to.y + '1');
     return stream;
 }
 
@@ -45,7 +45,7 @@ void Engine::EngineOption::set(const Engine::EngineOption::OptionValue& v)
 }
 
 bool Engine::EngineOption::isWithinConstraint(const Engine::EngineOption::OptionValue& optionValue,
-                                              const Engine::EngineOption::MaybeConstraint& constraint)
+    const Engine::EngineOption::MaybeConstraint& constraint)
 {
     if (!constraint.has_value())
         return true;
@@ -69,7 +69,7 @@ bool Engine::EngineOption::isWithinConstraint(const Engine::EngineOption::Option
 }
 
 Engine::EngineOption::EngineOption(Engine::EngineOption::Constraint c)
-        : maybeConstraint(c)
+    : maybeConstraint(c)
 {
 }
 
