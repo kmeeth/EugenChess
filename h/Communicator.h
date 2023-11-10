@@ -1,5 +1,6 @@
 #ifndef EUGENCHESS_COMMUNICATOR_H
 #define EUGENCHESS_COMMUNICATOR_H
+
 #include <iostream>
 /*
  * This class is an abstraction for a communication protocol between a chess engine and a chess GUI. Running a
