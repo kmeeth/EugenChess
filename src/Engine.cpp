@@ -72,3 +72,18 @@ Engine::EngineOption::EngineOption(Engine::EngineOption::Constraint c)
         : maybeConstraint(c)
 {
 }
+
+std::string Engine::getName() const
+{
+    return "Unknown Engine";
+}
+
+std::string Engine::getAuthor() const
+{
+    return "Unknown Author";
+}
+
+std::string Engine::getVersion() const
+{
+    return "Unknown Version";
+}

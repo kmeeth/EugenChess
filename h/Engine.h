@@ -76,6 +76,10 @@ namespace eugenchess::engine
         using EngineOptions = std::unordered_map<std::string, EngineOption>;
         [[nodiscard]] virtual EngineOptions& options() const = 0;
         virtual ~Engine() = default;
+        // Identification.
+        [[nodiscard]] virtual std::string getName() const;
+        [[nodiscard]] virtual std::string getAuthor() const;
+        [[nodiscard]] virtual std::string getVersion() const;
     };
 }
 // Prints algebraic form.
