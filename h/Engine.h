@@ -72,7 +72,7 @@ namespace eugenchess::engine
             OptionValue value;
         private:
             // Must have the same underlying type as the value.
-            MaybeConstraint maybeConstraint;
+            const MaybeConstraint maybeConstraint;
         };
         // Maps the name of the engine option to the option itself.
         using EngineOptions = std::unordered_map<std::string, EngineOption>;
