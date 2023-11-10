@@ -27,3 +27,18 @@ std::ostream &operator<<(std::ostream& stream, const Engine::Move::MaybeMove& ma
         return (stream << maybeMove.value());
     return stream << "0000";
 }
+
+Engine::EngineOption::MaybeConstraint Engine::EngineOption::getConstraint() const
+{
+    return maybeConstraint;
+}
+
+Engine::EngineOption::OptionValue Engine::EngineOption::get() const
+{
+    return value;
+}
+
+void Engine::EngineOption::set(const Engine::EngineOption::OptionValue& v)
+{
+    value = v;
+}
