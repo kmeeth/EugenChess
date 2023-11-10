@@ -1,5 +1,6 @@
 #ifndef EUGENCHESS_UCICOMMUNICATOR_H
 #define EUGENCHESS_UCICOMMUNICATOR_H
+
 #include "../Communicator.h"
 
 namespace eugenchess::uci
