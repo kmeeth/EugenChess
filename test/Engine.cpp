@@ -102,17 +102,17 @@ TEST(EngineTests, RangeConstraint)
     const EngineOption::RangeConstraint constraint(0, 100);
     EngineOption engineOption(constraint);
     const std::pair<int, bool> queries[] =
-            {
-                    { 40,  true },
-                    { 1,   true },
-                    { 0,   true },
-                    { -1,  false },
-                    { -50, false },
-                    { 99,  true },
-                    { 100, true },
-                    { 101, false },
-                    { 154, false }
-            };
+        {
+            { 40,  true },
+            { 1,   true },
+            { 0,   true },
+            { -1,  false },
+            { -50, false },
+            { 99,  true },
+            { 100, true },
+            { 101, false },
+            { 154, false }
+        };
     for (const auto& [val, exp]: queries)
     {
         EXPECT_TRUE(EngineOption::isWithinConstraint(val, constraint) == exp);
@@ -125,15 +125,15 @@ TEST(EngineTests, EnumConstraint)
     const EngineOption::EnumConstraint constraint{ "A", "B", "C", "IF" };
     EngineOption engineOption(constraint);
     const std::pair<std::string, bool> queries[] =
-            {
-                    { "A",  true },
-                    { "B",  true },
-                    { "C",  true },
-                    { "D",  false },
-                    { "AB", false },
-                    { "I",  false },
-                    { "",   false }
-            };
+        {
+            { "A",  true },
+            { "B",  true },
+            { "C",  true },
+            { "D",  false },
+            { "AB", false },
+            { "I",  false },
+            { "",   false }
+        };
     for (const auto& [val, exp]: queries)
     {
         EXPECT_TRUE(EngineOption::isWithinConstraint(val, constraint) == exp);
