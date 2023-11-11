@@ -10,7 +10,7 @@ UCICommunicator::UCICommunicator(std::istream& in, std::ostream& out, Engine& en
 
 void UCICommunicator::run()
 {
-    // TODO
+    identificationPhase();
 }
 
 std::istream& UCICommunicator::getInput() const
