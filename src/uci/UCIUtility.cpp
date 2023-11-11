@@ -55,4 +55,7 @@ void UCICommunicator::optionsListingPhase()
             out << " min " << data["min"] << " max " << data["max"];
         out << std::endl;
     }
+    auto commands = engine.commands();
+    for(auto& command : commands)
+        out << "option name " << command << "type button" << std::endl;
 }
