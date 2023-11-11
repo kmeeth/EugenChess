@@ -19,6 +19,7 @@ namespace eugenchess::uci
         std::ostream& out;
         engine::Engine& engine;
         void identificationPhase();
+        void optionsListingPhase();
     };
 }
 

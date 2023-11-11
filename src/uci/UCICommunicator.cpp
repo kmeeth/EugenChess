@@ -1,4 +1,5 @@
 #include "../../h/uci/UCICommunicator.h"
+#include "../../h/Engine.h"
 
 using namespace eugenchess::uci;
 using namespace eugenchess::engine;
@@ -10,7 +11,9 @@ UCICommunicator::UCICommunicator(std::istream& in, std::ostream& out, Engine& en
 
 void UCICommunicator::run()
 {
+    engine.setProtocol("uci");
     identificationPhase();
+    optionsListingPhase();
 }
 
 std::istream& UCICommunicator::getInput() const
