@@ -11,6 +11,7 @@ add_library(EugenChess
         h/uci/UCICommunicator.h
         src/uci/UCICommunicator.cpp
         src/uci/UCIUtility.cpp
+        h/uci/UCIUtility.h
 )
 
 enable_testing()

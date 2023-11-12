@@ -12,8 +12,8 @@ UCICommunicator::UCICommunicator(std::istream& in, std::ostream& out, Engine& en
 void UCICommunicator::run()
 {
     engine.setProtocol("uci");
-    identificationPhase();
-    optionsListingPhase();
+    identificationPhase(in, out, engine);
+    optionsListingPhase(in, out, engine);
 }
 
 std::istream& UCICommunicator::getInput() const
