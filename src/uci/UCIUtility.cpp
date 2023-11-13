@@ -59,3 +59,8 @@ void UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostr
     for (auto& command: commands)
         out << "option name " << command << " type button" << std::endl;
 }
+
+void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
+{
+
+}

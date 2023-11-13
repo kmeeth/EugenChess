@@ -16,6 +16,7 @@ void UCICommunicator::run()
     UCIUtility::identificationPhase(engine, in, out);
     UCIUtility::optionsListingPhase(engine, in, out);
     out << "uciok" << std::endl;
+    UCIUtility::mainLoop(engine, in, out);
 }
 
 std::istream& UCICommunicator::getInput() const
