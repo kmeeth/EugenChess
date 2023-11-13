@@ -74,12 +74,12 @@ namespace eugenchess::engine
         };
         // Maps the name of the engine option to the option itself.
         using EngineOptions = std::unordered_map<std::string, EngineOption>;
-        [[nodiscard]] virtual EngineOptions& options() const = 0;
+        [[nodiscard]] virtual EngineOptions& options() = 0;
         virtual ~Engine() = default;
         // Commands are (optional) custom actions that can be called upon the engine by name. It is recommended that no
         // commands and options share no names.
         virtual void performCommand(std::string_view name) = 0;
-        [[nodiscard]] virtual std::vector<std::string> commands() const = 0;
+        [[nodiscard]] virtual std::vector<std::string> commands() = 0;
         // Identification.
         [[nodiscard]] virtual std::string getName() const;
         [[nodiscard]] virtual std::string getAuthor() const;
