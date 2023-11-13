@@ -14,3 +14,8 @@ add_test(NAME DummyTests COMMAND DummyTests)
 add_executable(EngineTests Engine.cpp)
 target_link_libraries(EngineTests EugenChess gtest gtest_main)
 add_test(NAME EngineTests COMMAND EngineTests)
+
+add_executable(OptionsListingTests
+        uci/OptionsListing.cpp)
+target_link_libraries(OptionsListingTests EugenChess gtest gtest_main)
+add_test(NAME OptionsListingTests COMMAND OptionsListingTests)
