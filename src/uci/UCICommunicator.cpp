@@ -14,6 +14,7 @@ void UCICommunicator::run()
     engine.setProtocol("uci");
     implementation::UCIUtility::identificationPhase(engine, in, out);
     auto& options = implementation::UCIUtility::optionsListingPhase(engine, in, out);
+    out << "uciok" << std::endl;
 }
 
 std::istream& UCICommunicator::getInput() const
