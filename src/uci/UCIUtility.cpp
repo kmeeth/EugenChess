@@ -40,7 +40,7 @@ static std::unordered_map<std::string, std::string> analyseOption(const Engine::
 }
 
 // Lines 314-426 in the spec.
-Engine::EngineOptions& UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostream& out)
+void UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostream& out)
 {
     auto& options = engine.options();
     for (auto& [name, option]: options)
@@ -58,5 +58,4 @@ Engine::EngineOptions& UCIUtility::optionsListingPhase(Engine& engine, std::istr
     auto commands = engine.commands();
     for (auto& command: commands)
         out << "option name " << command << " type button" << std::endl;
-    return options;
 }

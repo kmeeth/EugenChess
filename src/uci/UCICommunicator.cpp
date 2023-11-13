@@ -2,6 +2,7 @@
 #include "../../h/uci/UCIUtility.h"
 
 using namespace eugenchess::uci;
+using namespace eugenchess::uci::implementation;
 using namespace eugenchess::engine;
 
 UCICommunicator::UCICommunicator(std::istream& in, std::ostream& out, Engine& engine)
@@ -12,8 +13,8 @@ UCICommunicator::UCICommunicator(std::istream& in, std::ostream& out, Engine& en
 void UCICommunicator::run()
 {
     engine.setProtocol("uci");
-    implementation::UCIUtility::identificationPhase(engine, in, out);
-    auto& options = implementation::UCIUtility::optionsListingPhase(engine, in, out);
+    UCIUtility::identificationPhase(engine, in, out);
+    UCIUtility::optionsListingPhase(engine, in, out);
     out << "uciok" << std::endl;
 }
 

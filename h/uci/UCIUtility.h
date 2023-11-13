@@ -10,8 +10,7 @@ namespace eugenchess::uci::implementation
     {
     public:
         static void identificationPhase(engine::Engine& engine, std::istream& in, std::ostream& out);
-        static engine::Engine::EngineOptions&
-        optionsListingPhase(engine::Engine& engine, std::istream& in, std::ostream& out);
+        static void optionsListingPhase(engine::Engine& engine, std::istream& in, std::ostream& out);
     };
 }
 
