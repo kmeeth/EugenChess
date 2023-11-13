@@ -33,7 +33,7 @@ static std::unordered_map<std::string, std::string> analyseOption(const Engine::
         data["var"] = "";
         for (auto& x: std::get<Engine::EngineOption::EnumConstraint>(constraint.value()))
         {
-            data["var"] += "var " + x + " ";
+            data["var"] += " var " + x;
         }
     }
     return data;
@@ -50,7 +50,7 @@ Engine::EngineOptions& UCIUtility::optionsListingPhase(Engine& engine, std::istr
         out << " type " << data["type"];
         out << " default " << data["default"];
         if (data["type"] == "combo")
-            out << " " << data["var"];
+            out << data["var"];
         else if (data["type"] == "spin")
             out << " min " << data["min"] << " max " << data["max"];
         out << std::endl;
