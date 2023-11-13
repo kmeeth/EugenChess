@@ -57,6 +57,6 @@ Engine::EngineOptions& UCIUtility::optionsListingPhase(Engine& engine, std::istr
     }
     auto commands = engine.commands();
     for (auto& command: commands)
-        out << "option name " << command << "type button" << std::endl;
+        out << "option name " << command << " type button" << std::endl;
     return options;
 }
