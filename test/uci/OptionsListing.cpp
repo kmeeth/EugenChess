@@ -38,6 +38,23 @@ namespace
                 myCommands.emplace_back("button1");
                 myCommands.emplace_back("button2");
             }
+            else if(test == 4)
+            {
+                myOptions.emplace("spin1", EngineOption::RangeConstraint{0, 100});
+                myOptions.emplace("spin2", EngineOption::RangeConstraint{50, 60});
+                myOptions["spin1"].set(69);
+                myOptions["spin2"].set(52);
+                myOptions.emplace("combo1", EngineOption::EnumConstraint{"A", "B", "C"});
+                myOptions.emplace("combo2", EngineOption::EnumConstraint{"x", "xy", "abc", "lol"});
+                myOptions["combo1"].set("A");
+                myOptions["combo2"].set("abc");
+                myOptions.emplace("string1", EngineOption());
+                myOptions.emplace("string2", EngineOption());
+                myOptions["string1"].set("A");
+                myOptions["string2"].set("28.6.1389.");
+                myCommands.emplace_back("button1");
+                myCommands.emplace_back("button2");
+            }
         }
         void setPosition(std::string_view FEN) override
         {
@@ -107,7 +124,6 @@ namespace
             if(line.empty())
                 continue;
             EXPECT_TRUE(std::any_of(expected.begin(), expected.end(), [=](auto& x){return x == line;}));
-            std::cout << line << std::endl;
         }
     }
 }
@@ -150,4 +166,20 @@ TEST(OptionsListingTests, ButtonOptions)
             "option name button2 type button"
         };
     checkOptions(3, expected);
+}
+
+TEST(OptionsListingTest, AllOptions)
+{
+    std::vector<std::string> expected =
+        {
+            "option name button1 type button",
+            "option name button2 type button",
+            "option name string1 type string default A",
+            "option name string2 type string default 28.6.1389.",
+            "option name combo1 type combo default A var A var B var C",
+            "option name combo2 type combo default abc var x var xy var abc var lol",
+            "option name spin1 type spin default 69 min 0 max 100",
+            "option name spin2 type spin default 52 min 50 max 60"
+        };
+    checkOptions(4, expected);
 }
