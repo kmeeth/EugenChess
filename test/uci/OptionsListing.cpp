@@ -12,40 +12,40 @@ namespace
     public:
         explicit TestEngine(int test)
         {
-            if(test == 0)
+            if (test == 0)
             {
-                myOptions.emplace("spin1", EngineOption::RangeConstraint{0, 100});
-                myOptions.emplace("spin2", EngineOption::RangeConstraint{50, 60});
+                myOptions.emplace("spin1", EngineOption::RangeConstraint{ 0, 100 });
+                myOptions.emplace("spin2", EngineOption::RangeConstraint{ 50, 60 });
                 myOptions["spin1"].set(69);
                 myOptions["spin2"].set(52);
             }
-            else if(test == 1)
+            else if (test == 1)
             {
-                myOptions.emplace("combo1", EngineOption::EnumConstraint{"A", "B", "C"});
-                myOptions.emplace("combo2", EngineOption::EnumConstraint{"x", "xy", "abc", "lol"});
+                myOptions.emplace("combo1", EngineOption::EnumConstraint{ "A", "B", "C" });
+                myOptions.emplace("combo2", EngineOption::EnumConstraint{ "x", "xy", "abc", "lol" });
                 myOptions["combo1"].set("A");
                 myOptions["combo2"].set("abc");
             }
-            else if(test == 2)
+            else if (test == 2)
             {
                 myOptions.emplace("string1", EngineOption());
                 myOptions.emplace("string2", EngineOption());
                 myOptions["string1"].set("A");
                 myOptions["string2"].set("28.6.1389.");
             }
-            else if(test == 3)
+            else if (test == 3)
             {
                 myCommands.emplace_back("button1");
                 myCommands.emplace_back("button2");
             }
-            else if(test == 4)
+            else if (test == 4)
             {
-                myOptions.emplace("spin1", EngineOption::RangeConstraint{0, 100});
-                myOptions.emplace("spin2", EngineOption::RangeConstraint{50, 60});
+                myOptions.emplace("spin1", EngineOption::RangeConstraint{ 0, 100 });
+                myOptions.emplace("spin2", EngineOption::RangeConstraint{ 50, 60 });
                 myOptions["spin1"].set(69);
                 myOptions["spin2"].set(52);
-                myOptions.emplace("combo1", EngineOption::EnumConstraint{"A", "B", "C"});
-                myOptions.emplace("combo2", EngineOption::EnumConstraint{"x", "xy", "abc", "lol"});
+                myOptions.emplace("combo1", EngineOption::EnumConstraint{ "A", "B", "C" });
+                myOptions.emplace("combo2", EngineOption::EnumConstraint{ "x", "xy", "abc", "lol" });
                 myOptions["combo1"].set("A");
                 myOptions["combo2"].set("abc");
                 myOptions.emplace("string1", EngineOption());
@@ -117,13 +117,14 @@ namespace
         std::stringstream in, out;
         UCICommunicator communicator(in, out, engine);
         implementation::UCIUtility::optionsListingPhase(engine, in, out);
-        while(out)
+        while (out)
         {
             std::string line;
             std::getline(out, line);
-            if(line.empty())
+            if (line.empty())
                 continue;
-            EXPECT_TRUE(std::any_of(expected.begin(), expected.end(), [=](auto& x){return x == line;}));
+            EXPECT_TRUE(std::any_of(expected.begin(), expected.end(), [=](auto& x)
+            { return x == line; }));
         }
     }
 }
