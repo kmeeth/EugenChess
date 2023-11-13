@@ -26,6 +26,18 @@ namespace
                 myOptions["combo1"].set("A");
                 myOptions["combo2"].set("abc");
             }
+            else if(test == 2)
+            {
+                myOptions.emplace("string1", EngineOption());
+                myOptions.emplace("string2", EngineOption());
+                myOptions["string1"].set("A");
+                myOptions["string2"].set("28.6.1389.");
+            }
+            else if(test == 3)
+            {
+                myCommands.emplace_back("button1");
+                myCommands.emplace_back("button2");
+            }
         }
         void setPosition(std::string_view FEN) override
         {
@@ -95,6 +107,7 @@ namespace
             if(line.empty())
                 continue;
             EXPECT_TRUE(std::any_of(expected.begin(), expected.end(), [=](auto& x){return x == line;}));
+            std::cout << line << std::endl;
         }
     }
 }
@@ -117,4 +130,24 @@ TEST(OptionsListingTests, ComboOptions)
             "option name combo2 type combo default abc var x var xy var abc var lol"
         };
     checkOptions(1, expected);
+}
+
+TEST(OptionsListingTests, StringOptions)
+{
+    std::vector<std::string> expected =
+        {
+            "option name string1 type string default A",
+            "option name string2 type string default 28.6.1389."
+        };
+    checkOptions(2, expected);
+}
+
+TEST(OptionsListingTests, ButtonOptions)
+{
+    std::vector<std::string> expected =
+        {
+            "option name button1 type button",
+            "option name button2 type button"
+        };
+    checkOptions(3, expected);
 }
