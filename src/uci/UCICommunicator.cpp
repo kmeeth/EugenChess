@@ -13,7 +13,7 @@ void UCICommunicator::run()
 {
     engine.setProtocol("uci");
     implementation::UCIUtility::identificationPhase(engine, in, out);
-    implementation::UCIUtility::optionsListingPhase(engine, in, out);
+    auto& options = implementation::UCIUtility::optionsListingPhase(engine, in, out);
 }
 
 std::istream& UCICommunicator::getInput() const
