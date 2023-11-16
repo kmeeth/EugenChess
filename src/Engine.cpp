@@ -97,3 +97,8 @@ void Engine::debugMode(bool mode)
 {
     // Nothing needs to be done by default. Override if engine wants to implement any sort of debug mode.
 }
+
+bool Engine::getDebugMode() const
+{
+    return false;
+}
