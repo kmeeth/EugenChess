@@ -89,7 +89,7 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
             line = "quit";
         std::istringstream ss(line);
         ss >> std::skipws;
-        retry:
+    retry:
         ss >> token;
         if (token == "quit")
             break;
