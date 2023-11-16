@@ -69,6 +69,16 @@ void UCIUtility::uciokHandler(Engine& engine, std::istringstream& ss, std::ostre
     out << "readyok" << std::endl;
 }
 
+void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    std::string token;
+    ss >> token;
+    if (token == "on")
+        engine.debugMode(true);
+    else if (token == "off")
+        engine.debugMode(false);
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while (true)
@@ -83,7 +93,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
-                {"uciok", UCIUtility::uciokHandler}
+                { "uciok", UCIUtility::uciokHandler },
+                { "debug", UCIUtility::debugHandler }
             };
         if (handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
