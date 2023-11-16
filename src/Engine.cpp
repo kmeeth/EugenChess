@@ -87,6 +87,7 @@ std::string Engine::getVersion() const
 {
     return "Unknown Version";
 }
+
 void Engine::ping()
 {
     // Nothing needs to be done by default. Override if engine does some expensive setup.
