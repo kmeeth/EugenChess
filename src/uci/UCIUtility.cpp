@@ -88,7 +88,9 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         if (!std::getline(in, line))
             line = "quit";
         std::istringstream ss(line);
-        ss >> std::skipws >> token;
+        ss >> std::skipws;
+        retry:
+        ss >> token;
         if (token == "quit")
             break;
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
@@ -99,6 +101,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
             };
         if (handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
+        else if (ss)
+            goto retry; // An unknown token has been encountered and this reads a new one from the stream.
         else
             out << "Unknown UCI command." << std::endl;
     }
