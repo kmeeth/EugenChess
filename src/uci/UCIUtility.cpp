@@ -63,14 +63,14 @@ void UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostr
 
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
-    while(true)
+    while (true)
     {
         std::string line, token;
-        if(!std::getline(in, line))
+        if (!std::getline(in, line))
             line = "quit";
         std::istringstream ss(line);
         ss >> std::skipws >> token;
-        if(token == "quit")
+        if (token == "quit")
             break;
     }
 }
