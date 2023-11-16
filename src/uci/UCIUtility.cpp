@@ -80,10 +80,32 @@ void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostre
         engine.debugMode(false);
 }
 
+// Determines the type of the option and thus sets the value in a type-safe manner.
+static void setOptionFromString(Engine::EngineOption& option, std::string_view value)
+{
+    bool isRangeConstrained = option.getConstraint().has_value() and option.getConstraint().value().index() == 0;
+    if (isRangeConstrained)
+        option.set(std::stoi(value.data()));
+    else
+        option.set(value.data());
+}
+
 // Lines 84-96 in thespec.
 void UCIUtility::setoptionHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
 {
-
+    auto& options = engine.options();
+    std::string token, value, name;
+    ss >> token; // "name" token.
+    while (ss >> token and token != "value") // Names can have spaces.
+        name += (name.empty() ? "" : " ") + token;
+    if (options.count(name)) // It is a proper EngineOption.
+    {
+        while (ss >> token) // Values can have spaces.
+            value += (value.empty() ? "" : " ") + token;
+        setOptionFromString(options[name], value);
+    }
+    else // It is a command (i.e. UCI button type option).
+        engine.performCommand(name);
 }
 
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
@@ -102,8 +124,9 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
-                { "uciok", UCIUtility::uciokHandler },
-                { "debug", UCIUtility::debugHandler }
+                { "uciok",     UCIUtility::uciokHandler },
+                { "debug",     UCIUtility::debugHandler },
+                { "setoption", UCIUtility::setoptionHandler }
             };
         if (handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
