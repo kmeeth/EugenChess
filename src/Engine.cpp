@@ -92,3 +92,8 @@ void Engine::ping()
 {
     // Nothing needs to be done by default. Override if engine does some expensive setup.
 }
+
+void Engine::debugMode(bool mode)
+{
+    // Nothing needs to be done by default. Override if engine wants to implement any sort of debug mode.
+}

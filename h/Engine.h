@@ -46,6 +46,8 @@ namespace eugenchess::engine
         // Some Engines might want to implement some protocol-specific options. This function makes knowledge of the
         // protocol possible to the Engine.
         virtual void setProtocol(std::string_view name) = 0;
+        // Set debug mode. The meaning of debug mode is open to interpretation.
+        virtual void debugMode(bool);
         // Engine options are represented as either integers or strings. These can be constrained or unconstrained.
         // Constrained strings belong to a set of strings, while constrained integers fall within a range.
         class EngineOption
