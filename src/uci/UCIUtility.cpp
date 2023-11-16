@@ -80,6 +80,12 @@ void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostre
         engine.debugMode(false);
 }
 
+// Lines 84-96 in thespec.
+void UCIUtility::setoptionHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while (true)
