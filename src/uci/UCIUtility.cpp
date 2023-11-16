@@ -1,5 +1,6 @@
 #include "../../h/uci/UCIUtility.h"
 #include <sstream>
+#include <functional>
 
 using namespace eugenchess::uci::implementation;
 using namespace eugenchess::uci;
@@ -72,5 +73,13 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         ss >> std::skipws >> token;
         if (token == "quit")
             break;
+        using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
+        const std::unordered_map<std::string, UCICommandHandler> handlers =
+            {
+            };
+        if(handlers.find(token) != handlers.end())
+            handlers.at(token)(engine, ss, out);
+        else
+            out << "Unknown UCI command." << std::endl;
     }
 }
