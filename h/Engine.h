@@ -84,6 +84,9 @@ namespace eugenchess::engine
         [[nodiscard]] virtual std::string getName() const;
         [[nodiscard]] virtual std::string getAuthor() const;
         [[nodiscard]] virtual std::string getVersion() const;
+        // Synchronization with the engine. The engine should return once it is ready to answer commands. Note that it
+        // should not stop search or wait for it to finish, if in progress.
+        virtual void ping();
     };
 }
 // Prints algebraic form.
