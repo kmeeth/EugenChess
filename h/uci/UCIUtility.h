@@ -12,6 +12,7 @@ namespace eugenchess::uci::implementation
         static void identificationPhase(engine::Engine& engine, std::istream& in, std::ostream& out);
         static void optionsListingPhase(engine::Engine& engine, std::istream& in, std::ostream& out);
         static void mainLoop(engine::Engine& engine, std::istream& in, std::ostream& out);
+        static void uciokHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
     };
 }
 
