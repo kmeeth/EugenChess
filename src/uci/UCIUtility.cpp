@@ -62,6 +62,13 @@ void UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostr
         out << "option name " << command << " type button" << std::endl;
 }
 
+// Lines 73 - 82 in the spec.
+void UCIUtility::uciokHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    engine.ping();
+    out << "readyok" << std::endl;
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while (true)
@@ -76,6 +83,7 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
+                {"uciok", UCIUtility::uciokHandler}
             };
         if (handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
