@@ -69,6 +69,7 @@ void UCIUtility::uciokHandler(Engine& engine, std::istringstream& ss, std::ostre
     out << "readyok" << std::endl;
 }
 
+// Lines 66 - 71 in the spec.
 void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
 {
     std::string token;
