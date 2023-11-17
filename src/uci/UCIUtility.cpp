@@ -1,6 +1,6 @@
 #include "../../h/uci/UCIUtility.h"
-#include <sstream>
 #include <functional>
+#include <sstream>
 
 using namespace eugenchess::uci::implementation;
 using namespace eugenchess::uci;
@@ -74,9 +74,9 @@ void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostre
 {
     std::string token;
     ss >> token;
-    if (token == "on")
+    if(token == "on")
         engine.debugMode(true);
-    else if (token == "off")
+    else if(token == "off")
         engine.debugMode(false);
 }
 
@@ -84,7 +84,7 @@ void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostre
 static void setOptionFromString(Engine::EngineOption& option, std::string_view value)
 {
     bool isRangeConstrained = option.getConstraint().has_value() and option.getConstraint().value().index() == 0;
-    if (isRangeConstrained)
+    if(isRangeConstrained)
         option.set(std::stoi(value.data()));
     else
         option.set(value.data());
@@ -95,43 +95,42 @@ void UCIUtility::setoptionHandler(Engine& engine, std::istringstream& ss, std::o
 {
     auto& options = engine.options();
     std::string token, value, name;
-    ss >> token; // "name" token.
-    while (ss >> token and token != "value") // Names can have spaces.
+    ss >> token;                           // "name" token.
+    while(ss >> token and token != "value")// Names can have spaces.
         name += (name.empty() ? "" : " ") + token;
-    if (options.count(name)) // It is a proper EngineOption.
+    if(options.count(name))// It is a proper EngineOption.
     {
-        while (ss >> token) // Values can have spaces.
+        while(ss >> token)// Values can have spaces.
             value += (value.empty() ? "" : " ") + token;
         setOptionFromString(options[name], value);
     }
-    else // It is a command (i.e. UCI button type option).
+    else// It is a command (i.e. UCI button type option).
         engine.performCommand(name);
 }
 
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
-    while (true)
+    while(true)
     {
         std::string line, token;
-        if (!std::getline(in, line))
+        if(!std::getline(in, line))
             line = "quit";
         std::istringstream ss(line);
         ss >> std::skipws;
     retry:
         ss >> token;
-        if (token == "quit")
+        if(token == "quit")
             break;
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
-                { "uciok",     UCIUtility::uciokHandler },
-                { "debug",     UCIUtility::debugHandler },
-                { "setoption", UCIUtility::setoptionHandler }
-            };
-        if (handlers.find(token) != handlers.end())
+                {"uciok", UCIUtility::uciokHandler},
+                {"debug", UCIUtility::debugHandler},
+                {"setoption", UCIUtility::setoptionHandler}};
+        if(handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
-        else if (ss)
-            goto retry; // An unknown token has been encountered and this reads a new one from the stream.
+        else if(ss)
+            goto retry;// An unknown token has been encountered and this reads a new one from the stream.
         else
             out << "Unknown UCI command." << std::endl;
     }

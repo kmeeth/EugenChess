@@ -1,7 +1,7 @@
 #include "../../h/uci/UCIUtility.h"
+#include <gtest/gtest.h>
 #include <sstream>
 #include <unordered_set>
-#include <gtest/gtest.h>
 
 using namespace eugenchess::engine;
 using namespace eugenchess::uci;
@@ -14,12 +14,12 @@ namespace
     public:
         TestEngine()
         {
-            myOptions.emplace("spin1", EngineOption::RangeConstraint{ 0, 100 });
-            myOptions.emplace("spin2", EngineOption::RangeConstraint{ 50, 60 });
+            myOptions.emplace("spin1", EngineOption::RangeConstraint{0, 100});
+            myOptions.emplace("spin2", EngineOption::RangeConstraint{50, 60});
             myOptions["spin1"].set(69);
             myOptions["spin2"].set(52);
-            myOptions.emplace("combo1", EngineOption::EnumConstraint{ "A", "B", "C" });
-            myOptions.emplace("combo2", EngineOption::EnumConstraint{ "x", "xy", "abc", "lol" });
+            myOptions.emplace("combo1", EngineOption::EnumConstraint{"A", "B", "C"});
+            myOptions.emplace("combo2", EngineOption::EnumConstraint{"x", "xy", "abc", "lol"});
             myOptions["combo1"].set("A");
             myOptions["combo2"].set("abc");
             myOptions.emplace("string1", EngineOption());
