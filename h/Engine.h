@@ -1,14 +1,14 @@
 #ifndef EUGENCHESS_ENGINE_H
 #define EUGENCHESS_ENGINE_H
 
-#include <string_view>
-#include <string>
-#include <optional>
 #include <any>
+#include <memory>
+#include <optional>
+#include <string>
+#include <string_view>
+#include <unordered_map>
 #include <variant>
 #include <vector>
-#include <unordered_map>
-#include <memory>
 /*
  * This class is an abstraction for a chess engine. It offers an interface of basic engine functionalities.
  */
@@ -17,23 +17,21 @@ namespace eugenchess::engine
     class Engine
     {
     public:
-        struct Move
-        {
-            struct Tile // Coordinates in [0, 7].
+        struct Move {
+            struct Tile// Coordinates in [0, 7].
             {
                 int x, y;
             };
             Tile from, to;
             Move() = default;
-            explicit Move(std::string_view algebraic); // Assumes standard algebraic form.
-            using MaybeMove = std::optional<Move>; // Support for nullmoves.
+            explicit Move(std::string_view algebraic);// Assumes standard algebraic form.
+            using MaybeMove = std::optional<Move>;    // Support for nullmoves.
         };
         virtual void setPosition(std::string_view FEN) = 0;
         [[nodiscard]] virtual std::string getFEN() const = 0;
-        struct Clock
-        {
-            int whiteTime, blackTime; // In milliseconds.
-            int whiteIncrement, blackIncrement; // In milliseconds.
+        struct Clock {
+            int whiteTime, blackTime;          // In milliseconds.
+            int whiteIncrement, blackIncrement;// In milliseconds.
             int turnsToTimeControl;
         };
         virtual void setClock(Clock clock) = 0;
@@ -64,10 +62,12 @@ namespace eugenchess::engine
             [[nodiscard]] virtual OptionValue get() const;
             virtual void set(const OptionValue&);
             virtual ~EngineOption() = default;
+
         protected:
             // This protected member exists because it serves the default implementations of the methods. It
             // can be used freely in alternative implementations.
             OptionValue value;
+
         private:
             // Must have the same underlying type as the value.
             const MaybeConstraint maybeConstraint;
@@ -85,10 +85,10 @@ namespace eugenchess::engine
         [[nodiscard]] virtual std::string getAuthor() const;
         [[nodiscard]] virtual std::string getVersion() const;
     };
-}
+}// namespace eugenchess::engine
 // Prints algebraic form.
 std::ostream& operator<<(std::ostream&, const eugenchess::engine::Engine::Move&);
 // Printing a MaybeMove to provide support for nullmoves.
 std::ostream& operator<<(std::ostream&, const eugenchess::engine::Engine::Move::MaybeMove&);
 
-#endif //EUGENCHESS_ENGINE_H
+#endif//EUGENCHESS_ENGINE_H

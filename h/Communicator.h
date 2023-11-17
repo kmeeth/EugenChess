@@ -19,12 +19,13 @@ namespace eugenchess
         public:
             virtual ~Communicator() = default;
             virtual void run() = 0;
+
         protected:
             [[nodiscard]] virtual std::istream& getInput() const = 0;
             [[nodiscard]] virtual std::ostream& getOutput() const = 0;
             [[nodiscard]] virtual engine::Engine& getEngine() const = 0;
         };
-    }
-}
+    }// namespace communication
+}// namespace eugenchess
 
-#endif //EUGENCHESS_COMMUNICATOR_H
+#endif//EUGENCHESS_COMMUNICATOR_H
