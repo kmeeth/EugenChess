@@ -33,5 +33,3 @@ Engine& UCICommunicator::getEngine() const
 {
     return engine;
 }
-
-
