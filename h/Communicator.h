@@ -25,7 +25,7 @@ namespace eugenchess
             [[nodiscard]] virtual std::ostream& getOutput() const = 0;
             [[nodiscard]] virtual engine::Engine& getEngine() const = 0;
         };
-    }// namespace communication
-}// namespace eugenchess
+    }
+}
 
 #endif//EUGENCHESS_COMMUNICATOR_H

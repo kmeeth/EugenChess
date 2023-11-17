@@ -85,7 +85,7 @@ namespace eugenchess::engine
         [[nodiscard]] virtual std::string getAuthor() const;
         [[nodiscard]] virtual std::string getVersion() const;
     };
-}// namespace eugenchess::engine
+}
 // Prints algebraic form.
 std::ostream& operator<<(std::ostream&, const eugenchess::engine::Engine::Move&);
 // Printing a MaybeMove to provide support for nullmoves.
