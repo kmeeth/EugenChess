@@ -19,7 +19,6 @@ namespace eugenchess
         public:
             virtual ~Communicator() = default;
             virtual void run() = 0;
-
         protected:
             [[nodiscard]] virtual std::istream& getInput() const = 0;
             [[nodiscard]] virtual std::ostream& getOutput() const = 0;

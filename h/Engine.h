@@ -62,12 +62,10 @@ namespace eugenchess::engine
             [[nodiscard]] virtual OptionValue get() const;
             virtual void set(const OptionValue&);
             virtual ~EngineOption() = default;
-
         protected:
             // This protected member exists because it serves the default implementations of the methods. It
             // can be used freely in alternative implementations.
             OptionValue value;
-
         private:
             // Must have the same underlying type as the value.
             const MaybeConstraint maybeConstraint;
