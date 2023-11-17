@@ -21,4 +21,4 @@ namespace eugenchess::uci
     };
 }
 
-#endif //EUGENCHESS_UCICOMMUNICATOR_H
+#endif//EUGENCHESS_UCICOMMUNICATOR_H

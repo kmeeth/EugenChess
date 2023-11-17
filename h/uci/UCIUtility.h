@@ -1,8 +1,8 @@
 #ifndef EUGENCHESS_UCIUTILITY_H
 #define EUGENCHESS_UCIUTILITY_H
 
-#include "UCICommunicator.h"
 #include "../Engine.h"
+#include "UCICommunicator.h"
 
 namespace eugenchess::uci::implementation
 {
@@ -14,4 +14,4 @@ namespace eugenchess::uci::implementation
     };
 }
 
-#endif //EUGENCHESS_UCIUTILITY_H
+#endif//EUGENCHESS_UCIUTILITY_H
