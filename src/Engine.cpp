@@ -1,6 +1,6 @@
 #include "../h/Engine.h"
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 using namespace eugenchess::engine;
 
@@ -24,7 +24,7 @@ std::ostream& operator<<(std::ostream& stream, const Engine::Move& move)
 
 std::ostream& operator<<(std::ostream& stream, const Engine::Move::MaybeMove& maybeMove)
 {
-    if (maybeMove.has_value())
+    if(maybeMove.has_value())
         return (stream << maybeMove.value());
     return stream << "0000";
 }
@@ -45,25 +45,24 @@ void Engine::EngineOption::set(const Engine::EngineOption::OptionValue& v)
 }
 
 bool Engine::EngineOption::isWithinConstraint(const Engine::EngineOption::OptionValue& optionValue,
-    const Engine::EngineOption::MaybeConstraint& constraint)
+                                              const Engine::EngineOption::MaybeConstraint& constraint)
 {
-    if (!constraint.has_value())
+    if(!constraint.has_value())
         return true;
     const int valueIndex = static_cast<int>(optionValue.index());
     const int constraintIndex = static_cast<int>(constraint.value().index());
     // Assuming the two are equal.
-    if (valueIndex == 0 and constraintIndex == 0) // int with range.
+    if(valueIndex == 0 and constraintIndex == 0)// int with range.
     {
         auto& value = std::get<int>(optionValue);
         auto& rangeConstraint = std::get<RangeConstraint>(constraint.value());
         return rangeConstraint.first <= value and rangeConstraint.second >= value;
     }
-    else if (valueIndex == 1 and constraintIndex == 1) // std::string with enum.
+    else if(valueIndex == 1 and constraintIndex == 1)// std::string with enum.
     {
         auto& value = std::get<std::string>(optionValue);
         auto& enumConstraint = std::get<EnumConstraint>(constraint.value());
-        return std::any_of(enumConstraint.begin(), enumConstraint.end(), [=](const std::string& x)
-        { return x == value; });
+        return std::any_of(enumConstraint.begin(), enumConstraint.end(), [=](const std::string& x) { return x == value; });
     }
     return false;
 }
