@@ -90,7 +90,7 @@ static void setOptionFromString(Engine::EngineOption& option, std::string_view v
         option.set(value.data());
 }
 
-// Lines 84-96 in thespec.
+// Lines 84-96 in the spec.
 void UCIUtility::setoptionHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
 {
     auto& options = engine.options();
