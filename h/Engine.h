@@ -86,8 +86,9 @@ namespace eugenchess::engine
         [[nodiscard]] virtual std::string getAuthor() const;
         [[nodiscard]] virtual std::string getVersion() const;
         // Copy protection and registration.
-        [[nodiscard]] virtual bool requiresCopyProtection() const; // This is at engine's discretion at every call.
-        [[nodiscard]] virtual bool copyProtectionCheck(); // Only run if required.
+        // Note: engines generally should not function if the check is failed. This is up to the implementor of a concrete engine.
+        [[nodiscard]] virtual bool requiresCopyProtection() const;// This is at engine's discretion at every call.
+        [[nodiscard]] virtual bool copyProtectionCheck();         // Only run if required.
         // Synchronization with the engine. The engine should return once it is ready to answer commands. Note that it
         // should not stop search or wait for it to finish, if in progress.
         virtual void ping();

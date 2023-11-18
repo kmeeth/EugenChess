@@ -104,7 +104,7 @@ bool Engine::getDebugMode() const
 
 bool Engine::requiresCopyProtection() const
 {
-    return false; // Engine usually require no such check.
+    return false;// Engine usually require no such check.
 }
 bool Engine::copyProtectionCheck()
 {
