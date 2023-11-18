@@ -66,6 +66,12 @@ void UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostr
 void UCIUtility::uciokHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
 {
     engine.ping();
+    if(engine.requiresCopyProtection())
+    {
+        out << "copyprotection checking" << std::endl;
+        bool ok = engine.copyProtectionCheck();
+        out << "copyprotection " << (ok ? "ok" : "error");
+    }
     out << "readyok" << std::endl;
 }
 
@@ -106,6 +112,12 @@ void UCIUtility::setoptionHandler(Engine& engine, std::istringstream& ss, std::o
     }
     else// It is a command (i.e. UCI button type option).
         engine.performCommand(name);
+}
+
+// Lines 213-226 in the spec.
+void UCIUtility::copyprotectionHandler(Engine& engine, std::ostream& out)
+{
+
 }
 
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
