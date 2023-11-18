@@ -101,3 +101,12 @@ bool Engine::getDebugMode() const
 {
     return false;
 }
+
+bool Engine::requiresCopyProtection() const
+{
+    return false; // Engine usually require no such check.
+}
+bool Engine::copyProtectionCheck()
+{
+    return true;
+}
