@@ -106,7 +106,18 @@ bool Engine::requiresCopyProtection() const
 {
     return false;// Engine usually require no such check.
 }
+
 bool Engine::copyProtectionCheck()
+{
+    return true;
+}
+
+bool Engine::requiresRegistration() const
+{
+    return false;// Analogous to copy protection.
+}
+
+bool Engine::registrationCheck(Engine::MaybeCredential username, Engine::MaybeCredential password)
 {
     return true;
 }
