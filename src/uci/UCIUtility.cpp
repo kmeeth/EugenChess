@@ -62,7 +62,7 @@ void UCIUtility::optionsListingPhase(Engine& engine, std::istream& in, std::ostr
         out << "option name " << command << " type button" << std::endl;
 }
 
-// Lines 73 - 82 in the spec.
+// Lines 73-82 in the spec.
 void UCIUtility::uciokHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
 {
     engine.ping();
@@ -70,7 +70,7 @@ void UCIUtility::uciokHandler(Engine& engine, std::istringstream& ss, std::ostre
     out << "readyok" << std::endl;
 }
 
-// Lines 66 - 71 in the spec.
+// Lines 66-71 in the spec.
 void UCIUtility::debugHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
 {
     std::string token;
@@ -120,6 +120,30 @@ void UCIUtility::copyprotectionHandler(Engine& engine, std::ostream& out)
     }
 }
 
+// Lines 228-244, 98-111 in the spec.
+void UCIUtility::registerHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    std::string token;
+    Engine::MaybeCredential name, code;
+    Engine::MaybeCredential* current = nullptr;
+    while(ss >> token)
+    {
+        if(token == "name")
+            current = &name;
+        else if(token == "code")
+            current = &code;
+        else if(current)// current == nullptr if command is "register later".
+        {
+            if(!current->has_value())
+                *current = "";
+            current->value() += (current->value().empty() ? "" : " ") + token;
+        }
+    }
+    out << "registration checking" << std::endl;
+    out << "registration ";
+    out << (engine.registrationCheck(name, code) ? "ok" : "error") << std::endl;
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while(true)
@@ -138,7 +162,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
             {
                 {"uciok", UCIUtility::uciokHandler},
                 {"debug", UCIUtility::debugHandler},
-                {"setoption", UCIUtility::setoptionHandler}};
+                {"setoption", UCIUtility::setoptionHandler},
+                {"register", UCIUtility::registerHandler}};
         if(handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
         else if(ss)

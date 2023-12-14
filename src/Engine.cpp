@@ -117,7 +117,7 @@ bool Engine::requiresRegistration() const
     return false;// Analogous to copy protection.
 }
 
-bool Engine::registrationCheck(Engine::MaybeCredential username, Engine::MaybeCredential password)
+bool Engine::registrationCheck(const Engine::MaybeCredential& username, const Engine::MaybeCredential& password)
 {
     return true;
 }

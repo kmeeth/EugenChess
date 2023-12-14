@@ -90,8 +90,9 @@ namespace eugenchess::engine
         [[nodiscard]] virtual bool requiresCopyProtection() const;// This is at engine's discretion at every call.
         [[nodiscard]] virtual bool copyProtectionCheck();         // Only run if required.
         [[nodiscard]] virtual bool requiresRegistration() const;  // Analogous to copyprotection.
-        using MaybeCredential = std::optional<std::string_view>;
-        [[nodiscard]] virtual bool registrationCheck(MaybeCredential username, MaybeCredential password);
+        // Providing neither credential means you do not want to register.
+        using MaybeCredential = std::optional<std::string>;
+        [[nodiscard]] virtual bool registrationCheck(const MaybeCredential& username, const MaybeCredential& password);
         // Synchronization with the engine. The engine should return once it is ready to answer commands. Note that it
         // should not stop search or wait for it to finish, if in progress.
         virtual void ping();

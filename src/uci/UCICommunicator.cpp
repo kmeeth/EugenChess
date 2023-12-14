@@ -14,6 +14,8 @@ void UCICommunicator::run()
 {
     engine.setProtocol("uci");
     UCIUtility::identificationPhase(engine, in, out);
+    if(engine.requiresRegistration())
+        out << "registration error" << std::endl;
     UCIUtility::optionsListingPhase(engine, in, out);
     out << "uciok" << std::endl;
     UCIUtility::mainLoop(engine, in, out);
