@@ -158,12 +158,15 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         if(token == "quit")
             break;
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
+        // clang-format off
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
                 {"uciok", UCIUtility::uciokHandler},
                 {"debug", UCIUtility::debugHandler},
                 {"setoption", UCIUtility::setoptionHandler},
-                {"register", UCIUtility::registerHandler}};
+                {"register", UCIUtility::registerHandler}
+            };
+        // clang-format on
         if(handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
         else if(ss)
