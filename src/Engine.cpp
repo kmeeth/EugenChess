@@ -52,13 +52,13 @@ bool Engine::EngineOption::isWithinConstraint(const Engine::EngineOption::Option
     const int valueIndex = static_cast<int>(optionValue.index());
     const int constraintIndex = static_cast<int>(constraint.value().index());
     // Assuming the two are equal.
-    if(valueIndex == 0 and constraintIndex == 0)// int with range.
+    if(valueIndex == 0 and constraintIndex == 0) // int with range.
     {
         auto& value = std::get<int>(optionValue);
         auto& rangeConstraint = std::get<RangeConstraint>(constraint.value());
         return rangeConstraint.first <= value and rangeConstraint.second >= value;
     }
-    else if(valueIndex == 1 and constraintIndex == 1)// std::string with enum.
+    else if(valueIndex == 1 and constraintIndex == 1) // std::string with enum.
     {
         auto& value = std::get<std::string>(optionValue);
         auto& enumConstraint = std::get<EnumConstraint>(constraint.value());
