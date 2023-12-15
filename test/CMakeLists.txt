@@ -24,3 +24,8 @@ add_executable(SetOptionTests
         uci/SetOption.cpp)
 target_link_libraries(SetOptionTests EugenChess gtest gtest_main)
 add_test(NAME SetOptionTests COMMAND SetOptionTests)
+
+add_executable(RegisterTests
+        uci/Register.cpp)
+target_link_libraries(RegisterTests EugenChess gtest gtest_main)
+add_test(NAME RegisterTests COMMAND RegisterTests)
