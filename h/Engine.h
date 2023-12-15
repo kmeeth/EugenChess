@@ -87,9 +87,9 @@ namespace eugenchess::engine
         [[nodiscard]] virtual std::string getVersion() const;
         // Copy protection and registration.
         // Note: engines generally should not function if the check is failed. This is up to the implementor of a concrete engine.
-        [[nodiscard]] virtual bool requiresCopyProtection() const;// This is at engine's discretion at every call.
-        [[nodiscard]] virtual bool copyProtectionCheck();         // Only run if required.
-        [[nodiscard]] virtual bool requiresRegistration() const;  // Analogous to copyprotection.
+        [[nodiscard]] virtual bool requiresCopyProtection() const; // This is at engine's discretion at every call.
+        [[nodiscard]] virtual bool copyProtectionCheck();          // Only run if required.
+        [[nodiscard]] virtual bool requiresRegistration() const;   // Analogous to copyprotection.
         // Providing neither credential means you do not want to register.
         using MaybeCredential = std::optional<std::string>;
         [[nodiscard]] virtual bool registrationCheck(const MaybeCredential& username, const MaybeCredential& password);

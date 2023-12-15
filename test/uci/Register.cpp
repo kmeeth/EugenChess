@@ -12,7 +12,7 @@ namespace
     {
     public:
         explicit TestEngine(std::string username, std::string code)
-            :username(std::move(username)), code(std::move(code))
+            : username(std::move(username)), code(std::move(code))
         {
         }
         void setPosition(std::string_view FEN) override
@@ -254,4 +254,3 @@ TEST(RegisterTests, BothFailSwapped)
     EXPECT_TRUE(std::getline(check, line));
     EXPECT_EQ(line, "registration error");
 }
-

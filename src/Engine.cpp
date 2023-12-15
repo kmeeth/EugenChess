@@ -104,7 +104,7 @@ bool Engine::getDebugMode() const
 
 bool Engine::requiresCopyProtection() const
 {
-    return false;// Engine usually require no such check.
+    return false; // Engine usually require no such check.
 }
 
 bool Engine::copyProtectionCheck()
@@ -114,7 +114,7 @@ bool Engine::copyProtectionCheck()
 
 bool Engine::requiresRegistration() const
 {
-    return false;// Analogous to copy protection.
+    return false; // Analogous to copy protection.
 }
 
 bool Engine::registrationCheck(const Engine::MaybeCredential& username, const Engine::MaybeCredential& password)

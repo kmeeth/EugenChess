@@ -20,4 +20,4 @@ namespace eugenchess::uci::implementation
     };
 }
 
-#endif//EUGENCHESS_UCIUTILITY_H
+#endif //EUGENCHESS_UCIUTILITY_H

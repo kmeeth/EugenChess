@@ -96,16 +96,16 @@ void UCIUtility::setoptionHandler(Engine& engine, std::istringstream& ss, std::o
 {
     auto& options = engine.options();
     std::string token, value, name;
-    ss >> token;                           // "name" token.
-    while(ss >> token and token != "value")// Names can have spaces.
+    ss >> token;                            // "name" token.
+    while(ss >> token and token != "value") // Names can have spaces.
         name += (name.empty() ? "" : " ") + token;
-    if(options.count(name))// It is a proper EngineOption.
+    if(options.count(name)) // It is a proper EngineOption.
     {
-        while(ss >> token)// Values can have spaces.
+        while(ss >> token) // Values can have spaces.
             value += (value.empty() ? "" : " ") + token;
         setOptionFromString(options[name], value);
     }
-    else// It is a command (i.e. UCI button type option).
+    else // It is a command (i.e. UCI button type option).
         engine.performCommand(name);
 }
 
@@ -132,7 +132,7 @@ void UCIUtility::registerHandler(engine::Engine& engine, std::istringstream& ss,
             current = &name;
         else if(token == "code")
             current = &code;
-        else if(current)// current == nullptr if command is "register later".
+        else if(current) // current == nullptr if command is "register later".
         {
             if(!current->has_value())
                 *current = "";
@@ -170,7 +170,7 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         if(handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
         else if(ss)
-            goto retry;// An unknown token has been encountered and this reads a new one from the stream.
+            goto retry; // An unknown token has been encountered and this reads a new one from the stream.
         else
             out << "Unknown UCI command." << std::endl;
     }
