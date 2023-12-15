@@ -27,4 +27,4 @@ namespace eugenchess
     }
 }
 
-#endif//EUGENCHESS_COMMUNICATOR_H
+#endif //EUGENCHESS_COMMUNICATOR_H

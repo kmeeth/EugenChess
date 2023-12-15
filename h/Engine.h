@@ -18,20 +18,20 @@ namespace eugenchess::engine
     {
     public:
         struct Move {
-            struct Tile// Coordinates in [0, 7].
+            struct Tile // Coordinates in [0, 7].
             {
                 int x, y;
             };
             Tile from, to;
             Move() = default;
-            explicit Move(std::string_view algebraic);// Assumes standard algebraic form.
-            using MaybeMove = std::optional<Move>;    // Support for nullmoves.
+            explicit Move(std::string_view algebraic); // Assumes standard algebraic form.
+            using MaybeMove = std::optional<Move>;     // Support for nullmoves.
         };
         virtual void setPosition(std::string_view FEN) = 0;
         [[nodiscard]] virtual std::string getFEN() const = 0;
         struct Clock {
-            int whiteTime, blackTime;          // In milliseconds.
-            int whiteIncrement, blackIncrement;// In milliseconds.
+            int whiteTime, blackTime;           // In milliseconds.
+            int whiteIncrement, blackIncrement; // In milliseconds.
             int turnsToTimeControl;
         };
         virtual void setClock(Clock clock) = 0;
@@ -89,4 +89,4 @@ std::ostream& operator<<(std::ostream&, const eugenchess::engine::Engine::Move&)
 // Printing a MaybeMove to provide support for nullmoves.
 std::ostream& operator<<(std::ostream&, const eugenchess::engine::Engine::Move::MaybeMove&);
 
-#endif//EUGENCHESS_ENGINE_H
+#endif //EUGENCHESS_ENGINE_H
