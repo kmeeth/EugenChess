@@ -183,4 +183,3 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
             out << "Unknown UCI command." << std::endl;
     }
 }
-
