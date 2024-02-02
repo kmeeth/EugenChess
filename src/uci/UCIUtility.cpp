@@ -151,6 +151,14 @@ void UCIUtility::ucinewgameHandler(Engine& engine, std::istringstream& ss, std::
     // which is already done by other commands.
 }
 
+// Lines 73-82 in the spec.
+void UCIUtility::isreadyHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    // Wait until the engine is able to take further commands (blocking).
+    engine.ping();
+    out << "readyok" << std::endl;
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while(true)
@@ -172,7 +180,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"debug", UCIUtility::debugHandler},
                 {"setoption", UCIUtility::setoptionHandler},
                 {"register", UCIUtility::registerHandler},
-                {"ucinewgame", UCIUtility::ucinewgameHandler}
+                {"ucinewgame", UCIUtility::ucinewgameHandler},
+                {"isready", UCIUtility::isreadyHandler}
             };
         // clang-format on
         if(handlers.find(token) != handlers.end())

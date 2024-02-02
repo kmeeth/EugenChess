@@ -18,6 +18,7 @@ namespace eugenchess::uci::implementation
         static void copyprotectionHandler(engine::Engine& engine, std::ostream& out);
         static void registerHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void ucinewgameHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
+        static void isreadyHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
     };
 }
 
