@@ -144,6 +144,13 @@ void UCIUtility::registerHandler(engine::Engine& engine, std::istringstream& ss,
     out << (engine.registrationCheck(name, code) ? "ok" : "error") << std::endl;
 }
 
+// Lines 113-121 in the spec.
+void UCIUtility::ucinewgameHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    // This function need not do anything, because starting a new game is equivalent to setting a new position,
+    // which is already done by other commands.
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while(true)
@@ -164,7 +171,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"uciok", UCIUtility::uciokHandler},
                 {"debug", UCIUtility::debugHandler},
                 {"setoption", UCIUtility::setoptionHandler},
-                {"register", UCIUtility::registerHandler}
+                {"register", UCIUtility::registerHandler},
+                {"ucinewgame", UCIUtility::ucinewgameHandler}
             };
         // clang-format on
         if(handlers.find(token) != handlers.end())
@@ -175,3 +183,4 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
             out << "Unknown UCI command." << std::endl;
     }
 }
+
