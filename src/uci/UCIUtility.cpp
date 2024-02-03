@@ -159,6 +159,23 @@ void UCIUtility::isreadyHandler(Engine& engine, std::istringstream& ss, std::ost
     out << "readyok" << std::endl;
 }
 
+// Lines 123-128 in the spec.
+void UCIUtility::positionHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    const std::string startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    std::string token;
+    std::string fen;
+    ss >> token;
+    if(token == "fen")
+        ss >> fen;
+    else // "startpos" token
+        fen = startPos;
+    engine.setPosition(fen);
+    ss >> token; // "moves" token.
+    while(ss >> token)
+        engine.playMove(Engine::Move(token));
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while(true)
@@ -181,7 +198,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"setoption", UCIUtility::setoptionHandler},
                 {"register", UCIUtility::registerHandler},
                 {"ucinewgame", UCIUtility::ucinewgameHandler},
-                {"isready", UCIUtility::isreadyHandler}
+                {"isready", UCIUtility::isreadyHandler},
+                {"position", UCIUtility::positionHandler}
             };
         // clang-format on
         if(handlers.find(token) != handlers.end())
