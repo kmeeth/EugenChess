@@ -167,11 +167,19 @@ void UCIUtility::positionHandler(Engine& engine, std::istringstream& ss, std::os
     std::string fen;
     ss >> token;
     if(token == "fen")
-        ss >> fen;
+        while(ss >> token)
+        {
+            if(token == "moves")
+                break;
+            fen += (fen.empty() ? "" : " ") + token;
+        }
     else // "startpos" token
+    {
         fen = startPos;
+        ss >> token; // "moves" token.
+    }
     engine.setPosition(fen);
-    ss >> token; // "moves" token.
+
     while(ss >> token)
         engine.playMove(Engine::Move(token));
 }
