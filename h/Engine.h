@@ -25,6 +25,7 @@ namespace eugenchess::engine
             Tile from, to;
             Move() = default;
             explicit Move(std::string_view algebraic); // Assumes standard algebraic form.
+            bool operator==(const Move& other) const; // Needs to be explicitly defined.
             using MaybeMove = std::optional<Move>;     // Support for nullmoves.
         };
         virtual void setPosition(std::string_view FEN) = 0;

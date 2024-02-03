@@ -13,6 +13,11 @@ Engine::Move::Move(std::string_view algebraic)
     to.y = algebraic[3] - '1';
 }
 
+bool Engine::Move::operator==(const Engine::Move& other) const
+{
+    return from.x == other.from.x and from.y == other.from.y and to.x == other.to.x and to.y == other.to.y;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Engine::Move& move)
 {
     stream << (char)(move.from.x + 'a');
