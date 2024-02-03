@@ -80,14 +80,14 @@ TEST(PositionsTests, SomePosWithMoves)
 {
     auto engine = TestEngine();
     std::string line;
-    std::istringstream ss("fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 moves a0b2 c4b6 a2g5");
+    std::istringstream ss("fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 moves a1b2 c4b6 a2g5");
     std::ostringstream out;
     UCIUtility::positionHandler(engine, ss, out);
     EXPECT_EQ(engine.fen, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     // clang-format off
     std::vector<Engine::Move> expected =
         {
-            Engine::Move("a0b2"), Engine::Move("c4b6"), Engine::Move("a2g5")
+            Engine::Move("a1b2"), Engine::Move("c4b6"), Engine::Move("a2g5")
         };
     // clang-format on
     ASSERT_EQ(expected.size(), engine.playedMoves.size());
