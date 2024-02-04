@@ -252,6 +252,7 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
         out << "bestmove " << bestMove << std::endl;
     };
     auto calculationThread = std::thread(calculationTask);
+    calculationThread.detach();
 }
 
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
