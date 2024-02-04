@@ -34,3 +34,9 @@ add_executable(PositionTests
         uci/PositionTests.cpp)
 target_link_libraries(PositionTests EugenChess gtest gtest_main)
 add_test(NAME PositionTests COMMAND PositionTests)
+
+add_executable(GoTests
+        uci/Go.cpp
+        uci/Go.cpp)
+target_link_libraries(GoTests EugenChess gtest gtest_main)
+add_test(NAME GoTests COMMAND GoTests)

@@ -202,7 +202,7 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
     // In order to support the UCI protocol fully, the engine needs to define options named depth, nodes, mate, movetime and infinite
     // (as integers). They need to have range of at least [0 - maxInt], except for infinite which is boolean [0 - 1].
     // Setting default values.
-    setOptionFromString(engine.options().at("infinite"), "1");
+    setOptionFromString(engine.options().at("infinite"), "0");
     setOptionFromString(engine.options().at("depth"), std::to_string(infinity));
     setOptionFromString(engine.options().at("nodes"), std::to_string(infinity));
     setOptionFromString(engine.options().at("mate"), "0");
