@@ -32,13 +32,6 @@ namespace
         {
             return {};
         }
-        void ponderMove(Move move) override
-        {
-        }
-        Move ponderHit() override
-        {
-            return {};
-        }
         void setProtocol(std::string_view name) override
         {
         }
