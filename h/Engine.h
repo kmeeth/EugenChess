@@ -38,10 +38,6 @@ namespace eugenchess::engine
         virtual void setClock(Clock clock) = 0;
         virtual void playMove(Move move) = 0;
         virtual Move calculateBestMove() = 0;
-        virtual void ponderMove(Move move) = 0;
-        // The pondered move has been played and the engine should continue the search for the best move as regular.
-        // ponderHit() returns the best move.
-        virtual Move ponderHit() = 0;
         // Some Engines might want to implement some protocol-specific options. This function makes knowledge of the
         // protocol possible to the Engine.
         virtual void setProtocol(std::string_view name) = 0;
