@@ -20,6 +20,7 @@ namespace eugenchess::uci::implementation
         static void ucinewgameHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void isreadyHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void positionHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
+        static void goHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
     };
 }
 

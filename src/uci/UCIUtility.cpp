@@ -1,6 +1,8 @@
 #include "../../h/uci/UCIUtility.h"
 #include <functional>
 #include <sstream>
+#include <thread>
+#include <unordered_set>
 
 using namespace eugenchess::uci::implementation;
 using namespace eugenchess::uci;
@@ -184,6 +186,74 @@ void UCIUtility::positionHandler(Engine& engine, std::istringstream& ss, std::os
         engine.playMove(Engine::Move(token));
 }
 
+// Lines 130-169 in the spec.
+void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    // Set up the clock so that its values do not influence the search, unless changed.
+    constexpr int infinity = std::numeric_limits<int>::max();
+    Engine::Clock clock = Engine::Clock();
+    clock.blackTime = clock.whiteTime = infinity;
+    clock.whiteIncrement = clock.blackIncrement = 0;
+    clock.turnsToTimeControl = infinity;
+
+    // Moves to be searched (all will be searched if empty).
+    std::vector<Engine::Move> searchMoves;
+
+    // In order to support the UCI protocol fully, the engine needs to define options named depth, nodes, mate, movetime and infinite
+    // (as integers). They need to have range of at least [0 - maxInt], except for infinite which is boolean [0 - 1].
+    // Setting default values.
+    setOptionFromString(engine.options().at("infinite"), "1");
+    setOptionFromString(engine.options().at("depth"), std::to_string(infinity));
+    setOptionFromString(engine.options().at("nodes"), std::to_string(infinity));
+    setOptionFromString(engine.options().at("mate"), "0");
+    setOptionFromString(engine.options().at("movetime"), std::to_string(infinity));
+
+    std::string token;
+    std::string current;
+    // clang-format off
+    const std::unordered_set<std::string> acceptedArguments =
+        {
+            "searchmoves", "ponder", "wtime", "btime", "winc", "binc", "movestogo", "depth", "nodes", "mate", "movetime"
+        };
+    // clang-format on
+    while(ss >> token)
+    {
+        if(acceptedArguments.count(token))
+            current = token;
+        else
+        {
+            if(current == "searchmoves")
+                searchMoves.emplace_back(token);
+            // "ponder" is ignored because the engine need not know if a calculation is a ponder or not.
+            else if(current == "wtime")
+                clock.whiteTime = std::stoi(token);
+            else if(current == "btime")
+                clock.blackTime = std::stoi(token);
+            else if(current == "winc")
+                clock.whiteIncrement = std::stoi(token);
+            else if(current == "binc")
+                clock.blackIncrement = std::stoi(token);
+            else if(current == "movestogo")
+                clock.turnsToTimeControl = std::stoi(token);
+            else if(token == "infinite")
+            {
+                if(engine.options().count("infinite"))
+                    setOptionFromString(engine.options().at("infinite"), "1");
+            }
+            else if(engine.options().count(current))
+                setOptionFromString(engine.options().at(current), token);
+        }
+    }
+
+    // The calculation task needs to run on the separate thread.
+    auto calculationTask = [&]()
+    {
+        auto bestMove = engine.calculateBestMove();
+        out << "bestmove " << bestMove << std::endl;
+    };
+    auto calculationThread = std::thread(calculationTask);
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while(true)
@@ -207,7 +277,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"register", UCIUtility::registerHandler},
                 {"ucinewgame", UCIUtility::ucinewgameHandler},
                 {"isready", UCIUtility::isreadyHandler},
-                {"position", UCIUtility::positionHandler}
+                {"position", UCIUtility::positionHandler},
+                {"go", UCIUtility::goHandler}
             };
         // clang-format on
         if(handlers.find(token) != handlers.end())
