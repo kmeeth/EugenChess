@@ -64,7 +64,7 @@ TEST(GoTests, DefaultValues)
     std::ostringstream out;
     UCIUtility::goHandler(engine, ss, out);
     const std::string keys[] = {"infinite", "depth", "nodes", "mate", "movetime"};
-    for(auto& key : keys)
+    for(auto& key: keys)
     {
         EXPECT_TRUE(engine.options().count(key));
         auto optionValue = engine.options().at(key).get();

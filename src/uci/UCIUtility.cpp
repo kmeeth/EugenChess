@@ -249,8 +249,7 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
     engine.setClock(clock);
 
     // The calculation task needs to run on the separate thread.
-    auto calculationTask = [&]()
-    {
+    auto calculationTask = [&]() {
         auto bestMove = engine.calculateBestMove();
         out << "bestmove " << bestMove << std::endl;
     };
@@ -307,4 +306,3 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
     }
     waitForAllCalculations();
 }
-
