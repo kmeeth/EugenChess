@@ -244,6 +244,7 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
                 setOptionFromString(engine.options().at(current), token);
         }
     }
+    engine.setClock(clock);
 
     // The calculation task needs to run on the separate thread.
     auto calculationTask = [&]()
