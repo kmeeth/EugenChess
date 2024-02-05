@@ -72,6 +72,7 @@ TEST(GoTests, DefaultValues)
         const int expectedDefault = (key == "infinite" or key == "mate" ? 0 : std::numeric_limits<int>::max());
         EXPECT_EQ(std::get<int>(optionValue), expectedDefault);
     }
+    UCIUtility::waitForAllCalculations();
 }
 
 TEST(GoTests, DefaultValuesClock)
@@ -85,6 +86,7 @@ TEST(GoTests, DefaultValuesClock)
     EXPECT_EQ(engine.myClock.whiteTime, std::numeric_limits<int>::max());
     EXPECT_EQ(engine.myClock.whiteIncrement, 0);
     EXPECT_EQ(engine.myClock.blackIncrement, 0);
+    UCIUtility::waitForAllCalculations();
 }
 
 TEST(GoTests, CustomValues)
@@ -104,6 +106,7 @@ TEST(GoTests, CustomValues)
         EXPECT_EQ(optionValue.index(), 0);
         EXPECT_EQ(std::get<int>(optionValue), expectedValue);
     }
+    UCIUtility::waitForAllCalculations();
 }
 
 TEST(GoTests, CustomValuesClock)
@@ -117,6 +120,7 @@ TEST(GoTests, CustomValuesClock)
     EXPECT_EQ(engine.myClock.whiteTime, 1);
     EXPECT_EQ(engine.myClock.whiteIncrement, 3);
     EXPECT_EQ(engine.myClock.blackIncrement, 4);
+    UCIUtility::waitForAllCalculations();
 }
 
 TEST(GoTests, Ponder)
@@ -125,4 +129,5 @@ TEST(GoTests, Ponder)
     std::istringstream ss("go ponder");
     std::ostringstream out;
     UCIUtility::goHandler(engine, ss, out);
+    UCIUtility::waitForAllCalculations();
 }

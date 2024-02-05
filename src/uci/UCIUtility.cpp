@@ -8,6 +8,8 @@ using namespace eugenchess::uci::implementation;
 using namespace eugenchess::uci;
 using namespace eugenchess::engine;
 
+std::unique_ptr<std::thread> UCIUtility::activeCalculationThread = nullptr;
+
 // Lines 186-192 in the spec.
 void UCIUtility::identificationPhase(Engine& engine, std::istream& in, std::ostream& out)
 {
@@ -252,8 +254,15 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
         auto bestMove = engine.calculateBestMove();
         out << "bestmove " << bestMove << std::endl;
     };
-    auto calculationThread = std::thread(calculationTask);
-    calculationThread.detach();
+    // Wait for the current calculation to end, if it is still ongoing. This should not happen generally.
+    waitForAllCalculations();
+    activeCalculationThread = std::make_unique<std::thread>(calculationTask);
+}
+
+void UCIUtility::waitForAllCalculations()
+{
+    if(activeCalculationThread and activeCalculationThread->joinable())
+        activeCalculationThread->join();
 }
 
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
@@ -290,4 +299,5 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         else
             out << "Unknown UCI command." << std::endl;
     }
+    waitForAllCalculations();
 }
