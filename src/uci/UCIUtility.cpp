@@ -265,6 +265,11 @@ void UCIUtility::waitForAllCalculations()
         activeCalculationThread->join();
 }
 
+void UCIUtility::ponderhitHandler(Engine& engine, std::istringstream& ss, std::ostream& out)
+{
+    // Nothing needs to be done, as the engine cares not if the calculation is a pondering one or not.
+}
+
 void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
 {
     while(true)
@@ -289,7 +294,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"ucinewgame", UCIUtility::ucinewgameHandler},
                 {"isready", UCIUtility::isreadyHandler},
                 {"position", UCIUtility::positionHandler},
-                {"go", UCIUtility::goHandler}
+                {"go", UCIUtility::goHandler},
+                {"ponderhit", UCIUtility::ponderhitHandler}
             };
         // clang-format on
         if(handlers.find(token) != handlers.end())
@@ -301,3 +307,4 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
     }
     waitForAllCalculations();
 }
+

@@ -23,6 +23,7 @@ namespace eugenchess::uci::implementation
         static void isreadyHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void positionHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void goHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
+        static void ponderhitHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void waitForAllCalculations();
         static std::unique_ptr<std::thread> activeCalculationThread;
     };
