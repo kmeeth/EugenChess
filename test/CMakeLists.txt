@@ -31,7 +31,7 @@ target_link_libraries(RegisterTests EugenChess gtest gtest_main)
 add_test(NAME RegisterTests COMMAND RegisterTests)
 
 add_executable(PositionTests
-        uci/PositionTests.cpp)
+        uci/Position.cpp)
 target_link_libraries(PositionTests EugenChess gtest gtest_main)
 add_test(NAME PositionTests COMMAND PositionTests)
 
