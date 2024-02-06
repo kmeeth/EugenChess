@@ -296,15 +296,15 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
-                {"uciok", UCIUtility::uciokHandler},
-                {"debug", UCIUtility::debugHandler},
-                {"setoption", UCIUtility::setoptionHandler},
-                {"register", UCIUtility::registerHandler},
-                {"ucinewgame", UCIUtility::ucinewgameHandler},
-                {"isready", UCIUtility::isreadyHandler},
-                {"position", UCIUtility::positionHandler},
-                {"go", UCIUtility::goHandler},
-                {"ponderhit", UCIUtility::ponderhitHandler},
+                {"uciok", uciokHandler},
+                {"debug", debugHandler},
+                {"setoption", setoptionHandler},
+                {"register", registerHandler},
+                {"ucinewgame", ucinewgameHandler},
+                {"isready", isreadyHandler},
+                {"position", positionHandler},
+                {"go", goHandler},
+                {"ponderhit", ponderhitHandler},
             };
         if(handlers.find(token) != handlers.end())
         {
