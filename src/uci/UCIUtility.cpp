@@ -213,12 +213,20 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
 
     std::string token;
     std::string current;
-    // clang-format off
     const std::unordered_set<std::string> acceptedArguments =
         {
-            "searchmoves", "ponder", "wtime", "btime", "winc", "binc", "movestogo", "depth", "nodes", "mate", "movetime"
+            "searchmoves",
+            "ponder",
+            "wtime",
+            "btime",
+            "winc",
+            "binc",
+            "movestogo",
+            "depth",
+            "nodes",
+            "mate",
+            "movetime",
         };
-    // clang-format on
     while(ss >> token)
     {
         if(acceptedArguments.count(token))
@@ -284,7 +292,6 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
         if(token == "quit")
             break;
         using UCICommandHandler = std::function<void(Engine&, std::istringstream&, std::ostream&)>;
-        // clang-format off
         const std::unordered_map<std::string, UCICommandHandler> handlers =
             {
                 {"uciok", UCIUtility::uciokHandler},
@@ -295,9 +302,8 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"isready", UCIUtility::isreadyHandler},
                 {"position", UCIUtility::positionHandler},
                 {"go", UCIUtility::goHandler},
-                {"ponderhit", UCIUtility::ponderhitHandler}
+                {"ponderhit", UCIUtility::ponderhitHandler},
             };
-        // clang-format on
         if(handlers.find(token) != handlers.end())
             handlers.at(token)(engine, ss, out);
         else if(ss)

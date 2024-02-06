@@ -44,16 +44,14 @@ namespace
             return {};
         }
         Clock myClock = Clock();
-        // clang-format off
         EngineOptions myOptions =
             {
                 {"infinite", EngineOption(Engine::EngineOption::Constraint(std::pair<int, int>(0, 1)))},
                 {"depth", EngineOption(Engine::EngineOption::Constraint(std::pair<int, int>(0, std::numeric_limits<int>::max())))},
                 {"nodes", EngineOption(Engine::EngineOption::Constraint(std::pair<int, int>(0, std::numeric_limits<int>::max())))},
                 {"mate", EngineOption(Engine::EngineOption::Constraint(std::pair<int, int>(0, std::numeric_limits<int>::max())))},
-                {"movetime", EngineOption(Engine::EngineOption::Constraint(std::pair<int, int>(0, std::numeric_limits<int>::max())))}
+                {"movetime", EngineOption(Engine::EngineOption::Constraint(std::pair<int, int>(0, std::numeric_limits<int>::max())))},
             };
-        // clang-format on
     };
 }
 
