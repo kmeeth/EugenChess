@@ -9,6 +9,7 @@ using namespace eugenchess::uci;
 using namespace eugenchess::engine;
 
 std::unique_ptr<std::thread> UCIUtility::activeCalculationThread = nullptr;
+std::mutex UCIUtility::outputMutex = std::mutex();
 
 // Lines 186-192 in the spec.
 void UCIUtility::identificationPhase(Engine& engine, std::istream& in, std::ostream& out)
@@ -260,6 +261,7 @@ void UCIUtility::goHandler(Engine& engine, std::istringstream& ss, std::ostream&
     // The calculation task needs to run on the separate thread.
     auto calculationTask = [&]() {
         auto bestMove = engine.calculateBestMove();
+        const auto lock = std::lock_guard<std::mutex>(outputMutex);
         out << "bestmove " << bestMove << std::endl;
     };
     // Wait for the current calculation to end, if it is still ongoing. This should not happen generally.
@@ -305,11 +307,17 @@ void UCIUtility::mainLoop(Engine& engine, std::istream& in, std::ostream& out)
                 {"ponderhit", UCIUtility::ponderhitHandler},
             };
         if(handlers.find(token) != handlers.end())
+        {
+            const auto lock = std::lock_guard<std::mutex>(outputMutex);
             handlers.at(token)(engine, ss, out);
+        }
         else if(ss)
             goto retry; // An unknown token has been encountered and this reads a new one from the stream.
         else
+        {
+            const auto lock = std::lock_guard<std::mutex>(outputMutex);
             out << "Unknown UCI command." << std::endl;
+        }
     }
     waitForAllCalculations();
 }

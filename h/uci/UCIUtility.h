@@ -3,6 +3,7 @@
 
 #include "../Engine.h"
 #include "UCICommunicator.h"
+#include <mutex>
 #include <thread>
 #include <unordered_set>
 
@@ -26,6 +27,7 @@ namespace eugenchess::uci::implementation
         static void ponderhitHandler(engine::Engine& engine, std::istringstream& ss, std::ostream& out);
         static void waitForAllCalculations();
         static std::unique_ptr<std::thread> activeCalculationThread;
+        static std::mutex outputMutex;
     };
 }
 
