@@ -5,7 +5,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 project(EugenChess LANGUAGES CXX)
 add_library(EugenChess
         h/Communicator.h
-        src/Communicator.cpp
         h/Engine.h
         src/Engine.cpp
         h/uci/UCICommunicator.h
