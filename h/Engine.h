@@ -17,7 +17,8 @@ namespace eugenchess::engine
     class Engine
     {
     public:
-        struct Move {
+        struct Move
+        {
             struct Tile // Coordinates in [0, 7].
             {
                 int x, y;
@@ -30,7 +31,8 @@ namespace eugenchess::engine
         };
         virtual void setPosition(std::string_view FEN) = 0;
         [[nodiscard]] virtual std::string getFEN() const = 0;
-        struct Clock {
+        struct Clock
+        {
             int whiteTime, blackTime;           // In milliseconds.
             int whiteIncrement, blackIncrement; // In milliseconds.
             int turnsToTimeControl;
