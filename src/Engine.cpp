@@ -11,6 +11,30 @@ Engine::Move::Move(std::string_view algebraic)
     from.y = algebraic[1] - '1';
     to.x = algebraic[2] - 'a';
     to.y = algebraic[3] - '1';
+    if(algebraic.length() > 4)
+        switch(algebraic[4])
+        {
+        case 'q':
+        {
+            promotionPiece = Piece::Queen;
+            break;
+        }
+        case 'n':
+        {
+            promotionPiece = Piece::Knight;
+            break;
+        }
+        case 'r':
+        {
+            promotionPiece = Piece::Rook;
+            break;
+        }
+        case 'b':
+        {
+            promotionPiece = Piece::Bishop;
+            break;
+        }
+        }
 }
 
 bool Engine::Move::operator==(const Engine::Move& other) const
@@ -20,10 +44,41 @@ bool Engine::Move::operator==(const Engine::Move& other) const
 
 std::ostream& operator<<(std::ostream& stream, const Engine::Move& move)
 {
+    using namespace eugenchess::engine;
     stream << (char)(move.from.x + 'a');
     stream << (char)(move.from.y + '1');
     stream << (char)(move.to.x + 'a');
     stream << (char)(move.to.y + '1');
+    if(move.promotionPiece.has_value())
+    {
+        char c = ' ';
+        switch(move.promotionPiece.value())
+        {
+        case Engine::Move::Piece::Queen:
+        {
+            c = 'q';
+            break;
+        }
+        case Engine::Move::Piece::Knight:
+        {
+            c = 'n';
+            break;
+        }
+        case Engine::Move::Piece::Rook:
+        {
+            c = 'r';
+            break;
+        }
+        case Engine::Move::Piece::Bishop:
+        {
+            c = 'b';
+            break;
+        }
+        default:
+            break;
+        }
+        stream << c;
+    }
     return stream;
 }
 

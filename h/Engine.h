@@ -24,6 +24,18 @@ namespace eugenchess::engine
                 int x, y;
             };
             Tile from, to;
+            enum class Piece
+            {
+                Pawn,
+                Knight,
+                Bishop,
+                Rook,
+                Queen,
+                King,
+                Count
+            };
+            using MaybePiece = std::optional<Piece>;
+            MaybePiece promotionPiece;
             Move() = default;
             explicit Move(std::string_view algebraic); // Assumes long algebraic form.
             bool operator==(const Move& other) const;  // Needs to be explicitly defined.

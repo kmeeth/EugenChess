@@ -13,6 +13,7 @@ TEST(EngineTests, MoveConstructionFromAlgebraic)
         EXPECT_TRUE(move.from.y == 0);
         EXPECT_TRUE(move.to.x == 0);
         EXPECT_TRUE(move.to.y == 0);
+        EXPECT_FALSE(move.promotionPiece.has_value());
     }
     {
         Move move("h8h8");
@@ -20,6 +21,7 @@ TEST(EngineTests, MoveConstructionFromAlgebraic)
         EXPECT_TRUE(move.from.y == 7);
         EXPECT_TRUE(move.to.x == 7);
         EXPECT_TRUE(move.to.y == 7);
+        EXPECT_FALSE(move.promotionPiece.has_value());
     }
     {
         Move move("e2e4");
@@ -27,13 +29,15 @@ TEST(EngineTests, MoveConstructionFromAlgebraic)
         EXPECT_TRUE(move.from.y == 1);
         EXPECT_TRUE(move.to.x == 4);
         EXPECT_TRUE(move.to.y == 3);
+        EXPECT_FALSE(move.promotionPiece.has_value());
     }
     {
-        Move move("d5g2");
+        Move move("d5g2q");
         EXPECT_TRUE(move.from.x == 3);
         EXPECT_TRUE(move.from.y == 4);
         EXPECT_TRUE(move.to.x == 6);
         EXPECT_TRUE(move.to.y == 1);
+        EXPECT_TRUE(move.promotionPiece.value() == Engine::Move::Piece::Queen);
     }
 }
 
@@ -49,10 +53,10 @@ TEST(EngineTests, MovePrint)
         EXPECT_TRUE(stream.str() == "d2d4");
     }
     {
-        Move move("h1a4");
+        Move move("h1a4r");
         std::ostringstream stream;
         stream << move;
-        EXPECT_TRUE(stream.str() == "h1a4");
+        EXPECT_TRUE(stream.str() == "h1a4r");
     }
 }
 
