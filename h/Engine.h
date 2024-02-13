@@ -17,19 +17,33 @@ namespace eugenchess::engine
     class Engine
     {
     public:
-        struct Move {
+        struct Move
+        {
             struct Tile // Coordinates in [0, 7].
             {
                 int x, y;
             };
             Tile from, to;
+            enum class Piece
+            {
+                Pawn,
+                Knight,
+                Bishop,
+                Rook,
+                Queen,
+                King,
+                Count
+            };
+            using MaybePiece = std::optional<Piece>;
+            MaybePiece promotionPiece;
             Move() = default;
             explicit Move(std::string_view algebraic); // Assumes standard algebraic form.
             using MaybeMove = std::optional<Move>;     // Support for nullmoves.
         };
         virtual void setPosition(std::string_view FEN) = 0;
         [[nodiscard]] virtual std::string getFEN() const = 0;
-        struct Clock {
+        struct Clock
+        {
             int whiteTime, blackTime;           // In milliseconds.
             int whiteIncrement, blackIncrement; // In milliseconds.
             int turnsToTimeControl;
