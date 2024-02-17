@@ -195,7 +195,11 @@ namespace eugenchess::implementation
             for(x = 0; x < boardSize; x++)
             {
                 if(!boardState[x][y].has_value())
+                {
                     emptyCounter++;
+                    if(x == boardSize - 1)
+                        newFEN += std::to_string(emptyCounter);
+                }
                 else
                 {
                     newFEN += (emptyCounter == 0 ? "" : std::to_string(emptyCounter));
