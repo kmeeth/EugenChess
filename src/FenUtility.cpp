@@ -155,6 +155,8 @@ namespace eugenchess::implementation
 
         // Phase 7: increment the counters.
         if(isCapture or boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn)
+            halfmoveCount = 0;
+        else
             halfmoveCount++;
         if(activeColor == Color::Black)
             fullmoveCount++;
