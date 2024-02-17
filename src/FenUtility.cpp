@@ -113,6 +113,7 @@ namespace eugenchess::implementation
         // Updating the board.
         // Phase 1: move the piece.
         Engine::Move::Tile from = move.from, to = move.to;
+        bool isCapture = boardState[to.x][to.y].has_value();
         boardState[to.x][to.y] = boardState[from.x][from.y];
         boardState[from.x][from.y].reset();
 
@@ -124,7 +125,10 @@ namespace eugenchess::implementation
         if(boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn                                     // Did a pawn move?
            and enPassantTile.has_value() and enPassantTile.value().x == to.x and enPassantTile.value().y == to.y // Was it to the en passant tile?
            and to.x != from.x)                                                                                   // Was it diagonal?
+        {
+            isCapture = true;
             boardState[to.x][from.y].reset();
+        }
 
         // Phase 4: check if it was a king move and if it was a castle.
         if(boardState[to.x][to.y].value().piece == Engine::Move::Piece::King)
@@ -150,7 +154,8 @@ namespace eugenchess::implementation
             enPassantTile.reset();
 
         // Phase 7: increment the counters.
-        halfmoveCount++;
+        if(isCapture or boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn)
+            halfmoveCount++;
         if(activeColor == Color::Black)
             fullmoveCount++;
 
