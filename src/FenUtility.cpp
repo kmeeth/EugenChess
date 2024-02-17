@@ -60,7 +60,7 @@ namespace eugenchess::implementation
 
         // Phase 1: pieces on the board.
         ss >> part;
-        int x, y = 0;
+        int x = 0, y = 0;
         for(char c: part)
         {
             if(c == '/')
