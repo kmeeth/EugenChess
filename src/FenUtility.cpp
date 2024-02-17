@@ -60,13 +60,13 @@ namespace eugenchess::implementation
 
         // Phase 1: pieces on the board.
         ss >> part;
-        int x = 0, y = 0;
+        int x = 0, y = boardSize - 1;
         for(char c: part)
         {
             if(c == '/')
             {
                 x = 0;
-                y++;
+                y--;
             }
             else if(c >= '0' and c <= '9')
                 x += c - '0';
@@ -189,7 +189,7 @@ namespace eugenchess::implementation
             return c;
         };
         std::string newFEN;
-        for(y = 0; y < boardSize; y++)
+        for(y = boardSize - 1; y >= 0; y--)
         {
             int emptyCounter = 0;
             for(x = 0; x < boardSize; x++)
