@@ -203,7 +203,7 @@ namespace eugenchess::implementation
                     emptyCounter = 0;
                 }
             }
-            newFEN += (y == boardSize - 1 ? ' ' : '/');
+            newFEN += (y == 0 ? ' ' : '/');
         }
 
         // Phase 2: active color.
