@@ -144,8 +144,7 @@ namespace eugenchess::implementation
 
         // Phase 5: check if it was a move from a corner, because of castling rights.
         if((from.x == 0 or from.x == boardSize - 1) and from.y == (activeColor == Color::Black ? boardSize - 1 : 0))
-            for(auto& a: castlingRights[static_cast<int>(activeColor)])
-                a = false; // Removing both castling rights.
+            castlingRights[static_cast<int>(activeColor)][from.x == 0 ? 0 : 1] = false; // Removing castling rights for that side.
 
         // Phase 6: check if it was a double pawn move, because of en passant.
         if(boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn and std::abs(from.y - to.y) == 2)
