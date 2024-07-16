@@ -87,3 +87,69 @@ TEST(FenUtilityTests, Promotions)
     for(auto& [before, move, after]: expected)
         ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
 }
+
+// Tests kingside castles.
+TEST(FenUtilityTests, CastlingKingside)
+{
+    std::tuple<std::string, Engine::Move, std::string> expected[] =
+        {
+            {"rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+             Engine::Move("e1g1"),
+             "rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 5 4"},
+            {"rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 5 4",
+             Engine::Move("e8g8"),
+             "rnbq1rk1/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQ1RK1 w - - 6 5"}};
+    for(auto& [before, move, after]: expected)
+        ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
+}
+
+// Tests queenside castles.
+TEST(FenUtilityTests, CastlingQueenside)
+{
+    std::tuple<std::string, Engine::Move, std::string> expected[] =
+        {
+            {"r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/R3KBNR w KQkq - 6 5",
+             Engine::Move("e1c1"),
+             "r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/2KR1BNR b kq - 7 5"},
+            {"r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/2KR1BNR b kq - 7 5",
+             Engine::Move("e8c8"),
+             "2kr1bnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/2KR1BNR w - - 8 6"}};
+    for(auto& [before, move, after]: expected)
+        ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
+}
+
+// King castling rights relinquishment.
+TEST(FenUtilityTests, KingCastlingRelinquishment)
+{
+    std::tuple<std::string, Engine::Move, std::string> expected[] =
+        {
+            {"r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/R3KBNR w KQkq - 6 5",
+             Engine::Move("e1d1"),
+             "r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/R2K1BNR b kq - 7 5"},
+            {"r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/R2K1BNR b kq - 7 5",
+             Engine::Move("e8d8"),
+             "r2k1bnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/R2K1BNR w - - 8 6"}};
+    for(auto& [before, move, after]: expected)
+        ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
+}
+
+// Rook castling rights relinquishment.
+TEST(FenUtilityTests, RookCastlingRelinquishment)
+{
+    std::tuple<std::string, Engine::Move, std::string> expected[] =
+        {
+            {"r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/R3KBNR w KQkq - 6 5",
+             Engine::Move("a1b1"),
+             "r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/1R2KBNR b Kkq - 7 5"},
+            {"r3kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/1R2KBNR b Kkq - 7 5",
+             Engine::Move("a8b8"),
+             "1r2kbnr/ppp1pppp/2nq4/3p1b2/3P1B2/2NQ4/PPP1PPPP/1R2KBNR w Kk - 8 6"},
+            {"rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+             Engine::Move("h1g1"),
+             "rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK1R1 b Qkq - 5 4"},
+            {"rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK1R1 b Qkq - 5 4",
+             Engine::Move("h8g8"),
+             "rnbqk1r1/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK1R1 w Qq - 6 5"}};
+    for(auto& [before, move, after]: expected)
+        ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
+}
