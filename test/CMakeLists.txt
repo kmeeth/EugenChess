@@ -41,7 +41,7 @@ target_link_libraries(GoTests EugenChess gtest gtest_main)
 add_test(NAME GoTests COMMAND GoTests)
 
 add_executable(FenUtilityTests FenUtility.cpp)
-target_link_libraries(GoTests EugenChess gtest gtest_main)
+target_link_libraries(FenUtilityTests EugenChess gtest gtest_main)
 add_test(NAME FenUtilityTests COMMAND FenUtilityTests)
 
 add_executable(IntegrationTests
