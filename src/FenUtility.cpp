@@ -144,7 +144,7 @@ namespace eugenchess::implementation
         }
 
         // Phase 5: check if it was a move from a corner, because of castling rights.
-        if((from.x == 0 or from.x == boardSize - 1) and from.y == (activeColor == Color::Black ? boardSize - 1 : 0))
+        if((from.x == 0 or from.x == boardSize - 1) and (from.y == (activeColor == Color::Black ? boardSize - 1 : 0)))
             castlingRights[static_cast<int>(activeColor)][from.x == 0 ? 0 : 1] = false; // Removing castling rights for that side.
 
         // Phase 6: check if it was a double pawn move, because of en passant.
@@ -223,9 +223,9 @@ namespace eugenchess::implementation
         // Phase 3: castling rights.
         std::string addition;
         if(castlingRights[static_cast<int>(Color::White)][kingSide]) addition += 'K';
-        if(castlingRights[static_cast<int>(Color::White)][kingSide]) addition += 'Q';
+        if(castlingRights[static_cast<int>(Color::White)][queenSide]) addition += 'Q';
         if(castlingRights[static_cast<int>(Color::Black)][kingSide]) addition += 'k';
-        if(castlingRights[static_cast<int>(Color::Black)][kingSide]) addition += 'q';
+        if(castlingRights[static_cast<int>(Color::Black)][queenSide]) addition += 'q';
         if(addition.empty())
             addition = "-";
         addition += " ";
