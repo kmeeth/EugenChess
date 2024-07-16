@@ -66,3 +66,24 @@ TEST(FenUtilityTests, EnPassantCaptures)
     for(auto& [before, move, after]: expected)
         ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
 }
+
+// Tests promotions.
+TEST(FenUtilityTests, Promotions)
+{
+    std::tuple<std::string, Engine::Move, std::string> expected[] =
+        {
+            {"8/4P3/8/8/8/7k/8/7K w - - 0 1",
+             Engine::Move("e7e8q"),
+             "4Q3/8/8/8/8/7k/8/7K b - - 0 1"},
+            {"8/4P3/8/8/8/7k/8/7K w - - 0 1",
+             Engine::Move("e7e8n"),
+             "4N3/8/8/8/8/7k/8/7K b - - 0 1"},
+            {"8/4P3/8/8/8/7k/8/7K w - - 0 1",
+             Engine::Move("e7e8b"),
+             "4B3/8/8/8/8/7k/8/7K b - - 0 1"},
+            {"8/4P3/8/8/8/7k/8/7K w - - 0 1",
+             Engine::Move("e7e8r"),
+             "4R3/8/8/8/8/7k/8/7K b - - 0 1"}};
+    for(auto& [before, move, after]: expected)
+        ASSERT_EQ(makeMoveDirectlyOnFEN(before, move), after);
+}
