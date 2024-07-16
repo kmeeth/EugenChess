@@ -116,13 +116,14 @@ namespace eugenchess::implementation
         bool isCapture = boardState[to.x][to.y].has_value();
         boardState[to.x][to.y] = boardState[from.x][from.y];
         boardState[from.x][from.y].reset();
+        bool isPawnMove = boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn;
 
         // Phase 2: check if it is a promotion.
-        if(to.y == 0 or to.y == 7)
+        if((to.y == 0 or to.y == 7) and isPawnMove)
             boardState[to.x][to.y] = {move.promotionPiece.value(), activeColor};
 
         // Phase 3: check if it is an en passant.
-        if(boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn                                     // Did a pawn move?
+        if(isPawnMove                                                                                            // Did a pawn move?
            and enPassantTile.has_value() and enPassantTile.value().x == to.x and enPassantTile.value().y == to.y // Was it to the en passant tile?
            and to.x != from.x)                                                                                   // Was it diagonal?
         {
@@ -147,13 +148,13 @@ namespace eugenchess::implementation
             castlingRights[static_cast<int>(activeColor)][from.x == 0 ? 0 : 1] = false; // Removing castling rights for that side.
 
         // Phase 6: check if it was a double pawn move, because of en passant.
-        if(boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn and std::abs(from.y - to.y) == 2)
+        if(isPawnMove and std::abs(from.y - to.y) == 2)
             enPassantTile = {to.x, (to.y + from.y) / 2};
         else
             enPassantTile.reset();
 
         // Phase 7: increment the counters.
-        if(isCapture or boardState[to.x][to.y].value().piece == Engine::Move::Piece::Pawn)
+        if(isCapture or isPawnMove)
             halfmoveCount = 0;
         else
             halfmoveCount++;
