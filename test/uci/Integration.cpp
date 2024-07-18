@@ -1,3 +1,4 @@
+#include "../../h/FenUtility.h"
 #include "../../h/uci/UCIUtility.h"
 #include <gtest/gtest.h>
 #include <sstream>
@@ -5,6 +6,7 @@
 using namespace eugenchess::uci::implementation;
 using namespace eugenchess::uci;
 using namespace eugenchess::engine;
+using namespace eugenchess::implementation;
 
 namespace
 {
@@ -25,7 +27,7 @@ namespace
         }
         void playMove(Move move) override
         {
-            // TODO
+            myFEN = makeMoveDirectlyOnFEN(myFEN, move);
         }
         void setProtocol(std::string_view name) override
         {
